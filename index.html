@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30-Day Calisthenics Workout</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .day-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .day-navigation button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .day-navigation button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .day-navigation button:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
+        .workout-details {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .workout-details img {
+            max-width: 100%;
+            height: auto;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .timer {
+            font-size: 1.5em;
+            color: white;
+            background-color: #007BFF;
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .timer.over {
+            background-color: #28a745;
+        }
+        .control-buttons {
+            margin-top: 10px;
+        }
+        .control-buttons button {
+            margin: 5px;
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .control-buttons button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>30-Day Calisthenics Workout</h1>
+    </header>
+    <div class="container">
+        <div class="day-navigation">
+            <button id="prevDay" onclick="changeDay(-1)" disabled>Previous</button>
+            <span id="dayTitle">Day 1: Push & Core</span>
+            <button id="nextDay" onclick="changeDay(1)">Next</button>
+        </div>
+        <div class="workout-details" id="workoutDetails">
+            <h3>Warm-Up:</h3>
+            <ul>
+                <li>Jumping Jacks - 2 minutes</li>
+                <li>Arm Circles - 1 minute</li>
+                <li>High Knees - 2 minutes</li>
+            </ul>
+            <h3>Main Workout:</h3>
+            <ul>
+                <li>
+                    Push-Ups - 4 sets of 10-15 reps
+                    <img src="pushupa.jpg" alt="Push-Up Exercise">
+                </li>
+                <li>
+                    Dips - 3 sets of 8-12 reps
+                    <img src="dips.jpg" alt="Dips Exercise">
+                </li>
+                <li>
+                    Incline Push-Ups - 3 sets of 10-12 reps
+                    <img src="incline_pushup.jpg" alt="Incline Push-Up Exercise">
+                </li>
+                <li>
+                    Diamond Push-Ups - 3 sets of 8-12 reps
+                    <img src="diamond_pushup.jpg" alt="Diamond Push-Up Exercise">
+                </li>
+                <li>
+                    Plank - 3 sets of 30-60 seconds
+                    <img src="plank.jpg" alt="Plank Exercise">
+                </li>
+                <li>
+                    Side Plank - 3 sets of 20-30 seconds
+                    <img src="side_plank.jpg" alt="Side Plank Exercise">
+                </li>
+            </ul>
+        </div>
+        <div class="timer" id="timer">Rest Timer: 90 seconds</div>
+        <div class="control-buttons">
+            <button onclick="startGlobalTimer()">Start</button>
+            <button onclick="pauseGlobalTimer()">Pause</button>
+            <button onclick="resetGlobalTimer()">Reset</button>
+        </div>
+    </div>
+    <script>
+        const workouts = [
+            { day: "Push & Core", details: `<h3>Warm-Up:</h3>
+                <ul>
+                    <li>Jumping Jacks - 2 minutes</li>
+                    <li>Arm Circles - 1 minute</li>
+                    <li>High Knees - 2 minutes</li>
+                </ul>
+                <h3>Main Workout:</h3>
+                <ul>
+                    <li>Push-Ups - 4 sets of 10-15 reps <img src='pushup.jpg' alt='Push-Up Exercise'></li>
+                    <li>Dips - 3 sets of 8-12 reps <img src='dips.jpg' alt='Dips Exercise'></li>
+                    <li>Incline Push-Ups - 3 sets of 10-12 reps <img src='incline_pushup.jpg' alt='Incline Push-Up Exercise'></li>
+                    <li>Diamond Push-Ups - 3 sets of 8-12 reps <img src='diamond_pushup.jpg' alt='Diamond Push-Up Exercise'></li>
+                    <li>Plank - 3 sets of 30-60 seconds <img src='plank.jpg' alt='Plank Exercise'></li>
+                    <li>Side Plank - 3 sets of 20-30 seconds <img src='side_plank.jpg' alt='Side Plank Exercise'></li>
+                </ul>` },
+            { day: "Pull & Core", details: `<h3>Warm-Up:</h3>
+                <ul>
+                    <li>Jump Rope - 2 minutes</li>
+                    <li>Arm Swings - 1 minute</li>
+                    <li>Mountain Climbers - 2 minutes</li>
+                </ul>
+                <h3>Main Workout:</h3>
+                <ul>
+                    <li>Pull-Ups - 4 sets of 5-10 reps <img src='pullup.jpg' alt='Pull-Up Exercise'></li>
+                    <li>Australian Rows - 3 sets of 10-12 reps <img src='australian_rows.jpg' alt='Australian Rows Exercise'></li>
+                    <li>Chin-Ups - 3 sets of 5-10 reps <img src='chinup.jpg' alt='Chin-Up Exercise'></li>
+                    <li>Reverse Rows - 3 sets of 10-12 reps <img src='reverse_rows.jpg' alt='Reverse Rows Exercise'></li>
+                    <li>Hanging Knee Raises - 3 sets of 10-15 reps <img src='hanging_knee_raises.jpg' alt='Hanging Knee Raises Exercise'></li>
+                    <li>Bicycle Crunches - 3 sets of 15-20 reps <img src='bicycle_crunches.jpg' alt='Bicycle Crunches Exercise'></li>
+                </ul>` },
+            { day: "Rest Day", details: "<p>Take a break and allow your body to recover.</p>" }
+        ];
+
+        let currentDay = 1;
+
+        function updateDay() {
+            const dayTitle = document.getElementById('dayTitle');
+            const workoutDetails = document.getElementById('workoutDetails');
+            const prevDay = document.getElementById('prevDay');
+            const nextDay = document.getElementById('nextDay');
+
+            const workout = workouts[(currentDay - 1) % 3];
+            dayTitle.textContent = `Day ${currentDay}: ${workout.day}`;
+            workoutDetails.innerHTML = workout.details;
+
+            prevDay.disabled = currentDay === 1;
+            nextDay.disabled = currentDay === 30;
+        }
+
+        function changeDay(direction) {
+            currentDay += direction;
+            updateDay();
+        }
+
+        // Timer functionality
+        let globalInterval;
+        let remainingTime = 90;
+
+        function startGlobalTimer() {
+            const timerDisplay = document.getElementById('timer');
+            if (globalInterval) clearInterval(globalInterval);
+
+            timerDisplay.textContent = `Rest Timer: ${remainingTime} seconds`;
+            timerDisplay.classList.remove('over');
+
+            globalInterval = setInterval(() => {
+                remainingTime--;
+                if (remainingTime <= 0) {
+                    clearInterval(globalInterval);
+                    timerDisplay.textContent = "Time Over!";
+                    timerDisplay.classList.add('over');
+                } else {
+                    timerDisplay.textContent = `Rest Timer: ${remainingTime} seconds`;
+                }
+            }, 1000);
+        }
+
+        function pauseGlobalTimer() {
+            if (globalInterval) {
+                clearInterval(globalInterval);
+                globalInterval = null;
+            }
+        }
+
+        function resetGlobalTimer() {
+            if (globalInterval) clearInterval(globalInterval);
+            remainingTime = 90;
+            const timerDisplay = document.getElementById('timer');
+            timerDisplay.textContent = `Rest Timer: ${remainingTime} seconds`;
+            timerDisplay.classList.remove('over');
+            startGlobalTimer();
+        }
+
+        // Initialize first day
+        updateDay();
+    </script>
+</body>
+</html>
