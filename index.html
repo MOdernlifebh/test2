@@ -1,243 +1,756 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>30-Day Calisthenics Workout</title>
+    <title>تطبيق تمارين الكالستنكس</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Tajawal", Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f9;
+            background-color: #eef2f3;
             color: #333;
+            line-height: 1.6;
         }
-        header {
-            background-color: #007BFF;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        .container {
-            padding: 20px;
+
+        .app-container {
             max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
+            margin: 20px auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
         }
-        .day-navigation {
-            display: flex;
-            justify-content: space-between;
+
+        header {
+            text-align: center;
             margin-bottom: 20px;
         }
-        .day-navigation button {
-            padding: 10px 15px;
-            background-color: #007BFF;
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #ff7f00;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .home {
+            text-align: center;
+        }
+
+        .home h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .home img {
+            max-width: 100px;
+            margin: 10px auto;
+            display: block;
+        }
+
+        .home .welcome-img {
+            max-width: 400px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 10px;
+        }
+
+        .home button {
+            background-color: #ff7f00;
             color: white;
             border: none;
-            border-radius: 5px;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 8px;
             cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
         }
-        .day-navigation button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
+
+        .home button:hover {
+            background-color: #cc6600;
+            transform: scale(1.05);
         }
-        .day-navigation button:hover:not(:disabled) {
-            background-color: #0056b3;
+
+        .home button:active {
+            transform: scale(0.95);
         }
-        .workout-details {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+        #day-selector {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #fff3e0;
+            border-radius: 8px;
         }
-        .workout-details img {
-            max-width: 100%;
-            height: auto;
-            margin: 10px 0;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .timer {
-            font-size: 1.5em;
+
+        #day-selector .days button {
+            background-color: #ff7f00;
             color: white;
-            background-color: #007BFF;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #day-selector .days button:hover {
+            background-color: #cc6600;
+            transform: scale(1.05);
+        }
+
+        #day-selector .days button:active {
+            transform: scale(0.95);
+        }
+
+        #day-selector .days button.completed {
+            background-color: #28a745;
+            color: white;
+        }
+
+        #day-selector .days button.active {
+            border: 2px solid #0056b3;
+            box-shadow: 0 0 5px #0056b3;
+        }
+
+        #workout-details h2 {
             text-align: center;
+            margin-bottom: 20px;
+            color: #cc6600;
+        }
+
+        section {
+            margin-bottom: 20px;
+        }
+
+        #workout-details ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #workout-details ul li {
+            background: #ffe6cc;
+            margin: 5px 0;
             padding: 10px;
             border-radius: 5px;
+            border-left: 4px solid #ff7f00;
+            display: flex;
+            align-items: center;
+        }
+
+        #workout-details ul li img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            border-radius: 5px;
+            object-fit: cover;
+        }
+
+        #timer-controls {
+            text-align: center;
             margin-top: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .timer.over {
-            background-color: #28a745;
-        }
-        .control-buttons {
-            margin-top: 10px;
-        }
-        .control-buttons button {
-            margin: 5px;
-            padding: 10px 15px;
-            background-color: #007BFF;
+            padding: 20px;
+            background: #ff7f00;
             color: white;
-            border: none;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #timer-display {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+            background: url('images/timer-bg.png') no-repeat center/cover;
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            display: inline-block;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            border: 2px solid #ff7f00;
+            text-align: center;
+        }
+
+        #timer-controls button {
+            background-color: white;
+            color: #ff7f00;
+            border: 2px solid white;
+            padding: 10px 15px;
+            margin: 5px;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s, color 0.3s, transform 0.2s;
         }
-        .control-buttons button:hover {
-            background-color: #0056b3;
+
+        #timer-controls button:hover {
+            background-color: #cc6600;
+            color: white;
+            transform: translateY(-2px);
         }
+
+        #timer-controls button:active {
+            transform: translateY(0);
+        }
+
+        #complete-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #complete-button button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        #complete-button button:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        #complete-button button:active {
+            transform: scale(0.95);
+        }
+
+        #cancel-button {
+            margin-top: 10px;
+        }
+
+        #cancel-button button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        #cancel-button button:hover {
+            background-color: #c82333;
+            transform: scale(1.05);
+        }
+
+        #cancel-button button:active {
+            transform: scale(0.95);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
     </style>
 </head>
 <body>
-    <header>
-        <h1>30-Day Calisthenics Workout</h1>
-    </header>
-    <div class="container">
-        <div class="day-navigation">
-            <button id="prevDay" onclick="changeDay(-1)" disabled>Previous</button>
-            <span id="dayTitle">Day 1: Push & Core</span>
-            <button id="nextDay" onclick="changeDay(1)">Next</button>
-        </div>
-        <div class="workout-details" id="workoutDetails">
-            <h3>Warm-Up:</h3>
-            <ul>
-                <li>Jumping Jacks - 2 minutes</li>
-                <li>Arm Circles - 1 minute</li>
-                <li>High Knees - 2 minutes</li>
-            </ul>
-            <h3>Main Workout:</h3>
-            <ul>
-                <li>
-                    Push-Ups - 4 sets of 10-15 reps
-                    <img src="image/html.png" height='100px' alt="Push-Up Exercise">
-                </li>
-                <li>
-                    Dips - 3 sets of 8-12 reps
-                    <img src="dips.jpg" alt="Dips Exercise">
-                </li>
-                <li>
-                    Incline Push-Ups - 3 sets of 10-12 reps
-                    <img src="incline_pushup.jpg" alt="Incline Push-Up Exercise">
-                </li>
-                <li>
-                    Diamond Push-Ups - 3 sets of 8-12 reps
-                    <img src="diamond_pushup.jpg" alt="Diamond Push-Up Exercise">
-                </li>
-                <li>
-                    Plank - 3 sets of 30-60 seconds
-                    <img src="plank.jpg" alt="Plank Exercise">
-                </li>
-                <li>
-                    Side Plank - 3 sets of 20-30 seconds
-                    <img src="side_plank.jpg" alt="Side Plank Exercise">
-                </li>
-            </ul>
-        </div>
-        <div class="timer" id="timer">Rest Timer: 90 seconds</div>
-        <div class="control-buttons">
-            <button onclick="startGlobalTimer()">Start</button>
-            <button onclick="pauseGlobalTimer()">Pause</button>
-            <button onclick="resetGlobalTimer()">Reset</button>
-        </div>
+    <div id="home-page" class="app-container home">
+        <header>
+            <h1>برنامج تمارين الكالستنكس</h1>
+        </header>
+        <img src="images/logo.png" alt="شعار التطبيق">
+        <h2>مرحبًا بك في تطبيق تمارين الكالستنكس!</h2>
+        <img class="welcome-img" src="images/welcome.png" alt="صورة ترحيبية">
+        <p>هذا التطبيق يساعدك على تنظيم تمارين الكالستنكس اليومية.</p>
+        <button onclick="navigateTo('exercise-page')">ابدأ التمارين</button>
+        <button onclick="navigateTo('extra-page')">صفحة تمارين إضافية</button>
+        <button onclick="showInfo()">عن البرنامج</button>
     </div>
+
+    <div id="exercise-page" class="app-container hidden">
+        <header>
+            <h1>برنامج تمارين الكالستنكس</h1>
+        </header>
+        <section id="day-selector">
+            <h2>اختر اليوم</h2>
+            <div class="days">
+                <button onclick="selectDay(1)" id="day1">اليوم 1</button>
+                <button onclick="selectDay(2)" id="day2">اليوم 2</button>
+                <button onclick="selectDay(3)" id="day3">اليوم 3 (راحة)</button>
+                <button onclick="selectDay(4)" id="day4">اليوم 4</button>
+                <button onclick="selectDay(5)" id="day5">اليوم 5</button>
+                <button onclick="selectDay(6)" id="day6">اليوم 6 (راحة)</button>
+                <button onclick="selectDay(7)" id="day7">اليوم 7 (راحة)</button>
+                <button onclick="selectDay(8)" id="day8">اليوم 8</button>
+                <button onclick="selectDay(9)" id="day9">اليوم 9</button>
+                <button onclick="selectDay(10)" id="day10">اليوم 10 (راحة)</button>
+                <button onclick="selectDay(11)" id="day11">اليوم 11</button>
+                <button onclick="selectDay(12)" id="day12">اليوم 12</button>
+                <button onclick="selectDay(13)" id="day13">اليوم 13 (راحة)</button>
+                <button onclick="selectDay(14)" id="day14">اليوم 14 (راحة)</button>
+                <button onclick="selectDay(15)" id="day15">اليوم 15</button>
+                <button onclick="selectDay(16)" id="day16">اليوم 16</button>
+                <button onclick="selectDay(17)" id="day17">اليوم 17 (راحة)</button>
+                <button onclick="selectDay(18)" id="day18">اليوم 18</button>
+                <button onclick="selectDay(19)" id="day19">اليوم 19</button>
+                <button onclick="selectDay(20)" id="day20">اليوم 20 (راحة)</button>
+                <button onclick="selectDay(21)" id="day21">اليوم 21 (راحة)</button>
+                <button onclick="selectDay(22)" id="day22">اليوم 22</button>
+                <button onclick="selectDay(23)" id="day23">اليوم 23</button>
+                <button onclick="selectDay(24)" id="day24">اليوم 24 (راحة)</button>
+                <button onclick="selectDay(25)" id="day25">اليوم 25</button>
+                <button onclick="selectDay(26)" id="day26">اليوم 26</button>
+                <button onclick="selectDay(27)" id="day27">اليوم 27 (راحة)</button>
+                <button onclick="selectDay(28)" id="day28">اليوم 28 (راحة)</button>
+                <button onclick="selectDay(29)" id="day29">اليوم 29</button>
+                <button onclick="selectDay(30)" id="day30">اليوم 30</button>
+            </div>
+        </section>
+        <section id="workout-details">
+            <h2>تفاصيل التمارين</h2>
+            <div id="warmup-section">
+                <h3>الإحماء</h3>
+                <ul id="warmup-list">
+                    <!-- تفاصيل الإحماء تُضاف ديناميكيًا هنا -->
+                </ul>
+            </div>
+            <div id="main-workout-section">
+                <h3>التمارين الأساسية</h3>
+                <ul id="workout-list">
+                    <!-- تفاصيل التمارين تُضاف ديناميكيًا هنا -->
+                </ul>
+            </div>
+            <div id="core-workout-section">
+                <h3>تمارين الكور</h3>
+                <ul id="core-list">
+                    <!-- تفاصيل تمارين الكور تُضاف ديناميكيًا هنا -->
+                </ul>
+            </div>
+            <div id="timer-controls">
+                <h3>العداد التنازلي</h3>
+                <p id="timer-display">90</p>
+                <button onclick="startTimer()">ابدأ</button>
+                <button onclick="pauseTimer()">إيقاف</button>
+                <button onclick="resetTimer()">إعادة ضبط</button>
+            </div>
+            <div id="complete-button">
+                <button onclick="markDayComplete()">تم</button>
+            </div>
+            <div id="cancel-button">
+                <button onclick="cancelDayCompletion()">إلغاء الحفظ</button>
+            </div>
+        </section>
+        <footer>
+            <p>© 2025 تطبيق تمارين الكالستنكس. جميع الحقوق محفوظة.</p>
+        </footer>
+    </div>
+
+    <div id="extra-page" class="app-container hidden">
+        <header>
+            <h1>تمارين إضافية</h1>
+        </header>
+        <p>مرحبًا بك في صفحة التمارين الإضافية!</p>
+        <button onclick="navigateTo('home-page')">العودة إلى الصفحة الرئيسية</button>
+    </div>
+
     <script>
-        const workouts = [
-            { day: "Push & Core", details: `<h3>Warm-Up:</h3>
-                <ul>
-                    <li>Jumping Jacks - 2 minutes</li>
-                    <li>Arm Circles - 1 minute</li>
-                    <li>High Knees - 2 minutes</li>
-                </ul>
-                <h3>Main Workout:</h3>
-                <ul>
-                    <li>Push-Ups - 4 sets of 10-15 reps <img src='image/html.png' height='100px' width='100px' alt='Push-Up Exercise'></li>
-                    <br>
-                    <li>Dips - 3 sets of 8-12 reps <img src='dips.jpg' alt='Dips Exercise'></li>
-                    <li>Incline Push-Ups - 3 sets of 10-12 reps <img src='incline_pushup.jpg' alt='Incline Push-Up Exercise'></li>
-                    <li>Diamond Push-Ups - 3 sets of 8-12 reps <img src='diamond_pushup.jpg' alt='Diamond Push-Up Exercise'></li>
-                    <li>Plank - 3 sets of 30-60 seconds <img src='plank.jpg' alt='Plank Exercise'></li>
-                    <li>Side Plank - 3 sets of 20-30 seconds <img src='side_plank.jpg' alt='Side Plank Exercise'></li>
-                </ul>` },
-            { day: "Pull & Core", details: `<h3>Warm-Up:</h3>
-                <ul>
-                    <li>Jump Rope - 2 minutes</li>
-                    <li>Arm Swings - 1 minute</li>
-                    <li>Mountain Climbers - 2 minutes</li>
-                </ul>
-                <h3>Main Workout:</h3>
-                <ul>
-                    <li>Pull-Ups - 4 sets of 5-10 reps <img src='pullup.jpg' alt='Pull-Up Exercise'></li>
-                    <li>Australian Rows - 3 sets of 10-12 reps <img src='australian_rows.jpg' alt='Australian Rows Exercise'></li>
-                    <li>Chin-Ups - 3 sets of 5-10 reps <img src='chinup.jpg' alt='Chin-Up Exercise'></li>
-                    <li>Reverse Rows - 3 sets of 10-12 reps <img src='reverse_rows.jpg' alt='Reverse Rows Exercise'></li>
-                    <li>Hanging Knee Raises - 3 sets of 10-15 reps <img src='hanging_knee_raises.jpg' alt='Hanging Knee Raises Exercise'></li>
-                    <li>Bicycle Crunches - 3 sets of 15-20 reps <img src='bicycle_crunches.jpg' alt='Bicycle Crunches Exercise'></li>
-                </ul>` },
-            { day: "Rest Day", details: "<p>Take a break and allow your body to recover.</p>" }
-        ];
+        function navigateTo(pageId) {
+            const pages = document.querySelectorAll('.app-container');
+            pages.forEach(page => page.classList.add('hidden'));
 
-        let currentDay = 1;
-
-        function updateDay() {
-            const dayTitle = document.getElementById('dayTitle');
-            const workoutDetails = document.getElementById('workoutDetails');
-            const prevDay = document.getElementById('prevDay');
-            const nextDay = document.getElementById('nextDay');
-
-            const workout = workouts[(currentDay - 1) % 3];
-            dayTitle.textContent = `Day ${currentDay}: ${workout.day}`;
-            workoutDetails.innerHTML = workout.details;
-
-            prevDay.disabled = currentDay === 1;
-            nextDay.disabled = currentDay === 30;
+            document.getElementById(pageId).classList.remove('hidden');
         }
 
-        function changeDay(direction) {
-            currentDay += direction;
-            updateDay();
+        function showInfo() {
+            alert("هذا التطبيق مصمم لمساعدتك على ممارسة تمارين الكالستنكس بفعالية وتنظيم.");
         }
 
-        // Timer functionality
-        let globalInterval;
-        let remainingTime = 90;
+        const workouts = {
+            1: {
+                warmup: [
+                    { name: "قفز الحبل - 2 دقيقة", img: "images/warmup1.jpg" },
+                    { name: "تمارين التمدد الجانبي - 1 دقيقة", img: "images/warmup2.jpg" }
+                ],
+                main: [
+                    { name: "تمرين الضغط - 3 مجموعات × 15", img: "images/push-ups.gif" },
+                    { name: "تمرين البلانك الجانبي - 3 مجموعات × 30 ثانية", img: "images/side_plank.jpg" },
+                    { name: "تمرين السكوات - 3 مجموعات × 20", img: "images/squat.jpg" },
+                    { name: "تمرين الطعنات الأمامية - 3 مجموعات × 15", img: "images/lunges.jpg" }
+                ],
+                core: [
+                    { name: "تمرين الدراجة - 3 مجموعات × 20", img: "images/bicycle.jpg" },
+                    { name: "رفع الأرجل - 3 مجموعات × 12", img: "images/leg_raise.jpg" }
+                ],
+            },
+            2: {
+                warmup: [
+                    { name: "تمارين الركض في المكان - 2 دقيقة", img: "images/jogging.jpg" },
+                    { name: "تمارين التمدد الخلفي - 1 دقيقة", img: "images/back_stretch.jpg" }
+                ],
+                main: [
+                    { name: "تمرين العقلة - 3 مجموعات × 10", img: "images/pullup.jpg" },
+                    { name: "تمرين الضغط بيد واحدة - 3 مجموعات × 8", img: "images/one_arm_pushup.jpg" },
+                    { name: "تمرين القفز - 3 مجموعات × 12", img: "images/jump.jpg" },
+                    { name: "تمرين الدوران الجانبي - 3 مجموعات × 15", img: "images/side_twist.jpg" }
+                ],
+                core: [
+                    { name: "تمرين اللوح الخشبي - 3 مجموعات × 1 دقيقة", img: "images/plank.jpg" },
+                    { name: "تمرين رفع الجذع - 3 مجموعات × 15", img: "images/situp.jpg" }
+                ],
+            },
+            4: {
+                warmup: [
+                    { name: "تمارين القفز الخفيف - 2 دقيقة", img: "images/light_jump.jpg" },
+                    { name: "تمارين التمدد للأمام - 1 دقيقة", img: "images/front_stretch.jpg" }
+                ],
+                main: [
+                    { name: "تمرين الضغط المائل - 3 مجموعات × 12", img: "images/incline_pushup.jpg" },
+                    { name: "تمرين السكوات بالقفز - 3 مجموعات × 15", img: "images/jump_squat.jpg" },
+                    { name: "تمرين السحب الجانبي - 3 مجموعات × 10", img: "images/side_pull.jpg" },
+                    { name: "تمرين الطعنات الجانبية - 3 مجموعات × 15", img: "images/side_lunges.jpg" }
+                ],
+                core: [
+                    { name: "تمرين رفع الأرجل مع الدوران - 3 مجموعات × 12", img: "images/leg_raise_twist.jpg" },
+                    { name: "تمرين الكرنش - 3 مجموعات × 20", img: "images/crunch.jpg" }
+                ],
+            },
+            5: {
+                warmup: [
+                    { name: "تمارين الركض السريع - 2 دقيقة", img: "images/sprint.jpg" },
+                    { name: "تمارين التمدد للأرجل - 1 دقيقة", img: "images/leg_stretch.jpg" }
+                ],
+                main: [
+                    { name: "تمرين الضغط العادي - 3 مجموعات × 20", img: "images/pushup.jpg" },
+                    { name: "تمرين البلانك مع رفع الذراع - 3 مجموعات × 30 ثانية", img: "images/plank_arm_raise.jpg" },
+                    { name: "تمرين السكوات بوزن الجسم - 3 مجموعات × 15", img: "images/bodyweight_squat.jpg" },
+                    { name: "تمرين القفز العالي - 3 مجموعات × 10", img: "images/high_jump.jpg" }
+                ],
+                core: [
+                    { name: "تمرين اللوح الخشبي الجانبي - 3 مجموعات × 30 ثانية", img: "images/side_plank.jpg" },
+                    { name: "تمرين الدراجة السريع - 3 مجموعات × 20", img: "images/fast_bicycle.jpg" }
+                ],
+            },
+            8: {
+                warmup: [
+                    { name: "قفز الحبل - 2 دقيقة", img: "images/warmup1.jpg" },
+                    { name: "تمارين التمدد الجانبي - 1 دقيقة", img: "images/warmup2.jpg" }
+                ],
+                main: [
+                    { name: "تمرين الضغط - 3 مجموعات × 15", img: "images/pushup.jpg" },
+                    { name: "تمرين البلانك الجانبي - 3 مجموعات × 30 ثانية", img: "images/side_plank.jpg" },
+                    { name: "تمرين السكوات - 3 مجموعات × 20", img: "images/squat.jpg" },
+                    { name: "تمرين الطعنات الأمامية - 3 مجموعات × 15", img: "images/lunges.jpg" }
+                ],
+                core: [
+                    { name: "تمرين الدراجة - 3 مجموعات × 20", img: "images/bicycle.jpg" },
+                    { name: "رفع الأرجل - 3 مجموعات × 12", img: "images/leg_raise.jpg" }
+                ],
+            },
+            9: {
+                warmup: [
+                    { name: "تمارين الركض في المكان - 2 دقيقة", img: "images/jogging.jpg" },
+                    { name: "تمارين التمدد الخلفي - 1 دقيقة", img: "images/back_stretch.jpg" }
+                ],
+                main: [
+                    { name: "تمرين العقلة - 3 مجموعات × 10", img: "images/pullup.jpg" },
+                    { name: "تمرين الضغط بيد واحدة - 3 مجموعات × 8", img: "images/one_arm_pushup.jpg" },
+                    { name: "تمرين القفز - 3 مجموعات × 12", img: "images/jump.jpg" },
+                    { name: "تمرين الدوران الجانبي - 3 مجموعات × 15", img: "images/side_twist.jpg" }
+                ],
+                core: [
+                    { name: "تمرين اللوح الخشبي - 3 مجموعات × 1 دقيقة", img: "images/plank.jpg" },
+                    { name: "تمرين رفع الجذع - 3 مجموعات × 15", img: "images/situp.jpg" }
+                ],
+            },
+            11: {
+                warmup: [
+                    { name: "تمارين القفز الخفيف - 2 دقيقة", img: "images/light_jump.jpg" },
+                    { name: "تمارين التمدد للأمام - 1 دقيقة", img: "images/front_stretch.jpg" }
+                ],
+                main: [
+                    { name: "تمرين الضغط المائل - 3 مجموعات × 12", img: "images/incline_pushup.jpg" },
+                    { name: "تمرين السكوات بالقفز - 3 مجموعات × 15", img: "images/jump_squat.jpg" },
+                    { name: "تمرين السحب الجانبي - 3 مجموعات × 10", img: "images/side_pull.jpg" },
+                    { name: "تمرين الطعنات الجانبية - 3 مجموعات × 15", img: "images/side_lunges.jpg" }
+                ],
+                core: [
+                    { name: "تمرين رفع الأرجل مع الدوران - 3 مجموعات × 12", img: "images/leg_raise_twist.jpg" },
+                    { name: "تمرين الكرنش - 3 مجموعات × 20", img: "images/crunch.jpg" }
+                ],
+            },
+            12: {
+                warmup: [
+                    { name: "تمارين الركض السريع - 2 دقيقة", img: "images/sprint.jpg" },
+                    { name: "تمارين التمدد للأرجل - 1 دقيقة", img: "images/leg_stretch.jpg" }
+                ],
+                main: [
+                    { name: "تمرين الضغط العادي - 3 مجموعات × 20", img: "images/pushup.jpg" },
+                    { name: "تمرين البلانك مع رفع الذراع - 3 مجموعات × 30 ثانية", img: "images/plank_arm_raise.jpg" },
+                    { name: "تمرين السكوات بوزن الجسم - 3 مجموعات × 15", img: "images/bodyweight_squat.jpg" },
+                    { name: "تمرين القفز العالي - 3 مجموعات × 10", img: "images/high_jump.jpg" }
+                ],
+                core: [
+                    { name: "تمرين اللوح الخشبي الجانبي - 3 مجموعات × 30 ثانية", img: "images/side_plank.jpg" },
+                    { name: "تمرين الدراجة السريع - 3 مجموعات × 20", img: "images/fast_bicycle.jpg" }
+                ],
+            },
+            15: {
+                warmup: [
+                    { name: "قفز الحبل - 2 دقيقة", img: "images/warmup1.jpg" },
+                    { name: "تمارين التمدد الجانبي - 1 دقيقة", img: "images/warmup2.jpg" }
+                ],
+                main: [
+                    { name: "تمرين الضغط - 3 مجموعات × 15", img: "images/pushup.jpg" },
+                    { name: "تمرين البلانك الجانبي - 3 مجموعات × 30 ثانية", img: "images/side_plank.jpg" },
+                    { name: "تمرين السكوات - 3 مجموعات × 20", img: "images/squat.jpg" },
+                    { name: "تمرين الطعنات الأمامية - 3 مجموعات × 15", img: "images/lunges.jpg" }
+                ],
+                core: [
+                    { name: "تمرين الدراجة - 3 مجموعات × 20", img: "images/bicycle.jpg" },
+                    { name: "رفع الأرجل - 3 مجموعات × 12", img: "images/leg_raise.jpg" }
+                ],
+            },
+            16: {
+                warmup: [
+                    { name: "تمارين الركض في المكان - 2 دقيقة", img: "images/jogging.jpg" },
+                    { name: "تمارين التمدد الخلفي - 1 دقيقة", img: "images/back_stretch.jpg" }
+                ],
+                main: [
+                    { name: "تمرين العقلة - 3 مجموعات × 10", img: "images/pullup.jpg" },
+                    { name: "تمرين الضغط بيد واحدة - 3 مجموعات × 8", img: "images/one_arm_pushup.jpg" },
+                    { name: "تمرين القفز - 3 مجموعات × 12", img: "images/jump.jpg" },
+                    { name: "تمرين الدوران الجانبي - 3 مجموعات × 15", img: "images/side_twist.jpg" }
+                ],
+                core: [
+                    { name: "تمرين اللوح الخشبي - 3 مجموعات × 1 دقيقة", img: "images/plank.jpg" },
+                    { name: "تمرين رفع الجذع - 3 مجموعات × 15", img: "images/situp.jpg" }
+                ],
+            },
+            18: {
+                warmup: [
+                    { name: "تمارين القفز الخفيف - 2 دقيقة", img: "images/light_jump.jpg" },
+                    { name: "تمارين التمدد للأمام - 1 دقيقة", img: "images/front_stretch.jpg" }
+                ],
+                main: [
+                    { name: "تمرين الضغط المائل - 3 مجموعات × 12", img: "images/incline_pushup.jpg" },
+                    { name: "تمرين السكوات بالقفز - 3 مجموعات × 15", img: "images/jump_squat.jpg" },
+                    { name: "تمرين السحب الجانبي - 3 مجموعات × 10", img: "images/side_pull.jpg" },
+                    { name: "تمرين الطعنات الجانبية - 3 مجموعات × 15", img: "images/side_lunges.jpg" }
+                ],
+                core: [
+                    { name: "تمرين رفع الأرجل مع الدوران - 3 مجموعات × 12", img: "images/leg_raise_twist.jpg" },
+                    { name: "تمرين الكرنش - 3 مجموعات × 20", img: "images/crunch.jpg" }
+                ],
+            },
+            19: {
+                warmup: [
+                    { name: "تمارين الركض السريع - 2 دقيقة", img: "images/sprint.jpg" },
+                    { name: "تمارين التمدد للأرجل - 1 دقيقة", img: "images/leg_stretch.jpg" }
+                ],
+                main: [
+                    { name: "تمرين الضغط العادي - 3 مجموعات × 20", img: "images/pushup.jpg" },
+                    { name: "تمرين البلانك مع رفع الذراع - 3 مجموعات × 30 ثانية", img: "images/plank_arm_raise.jpg" },
+                    { name: "تمرين السكوات بوزن الجسم - 3 مجموعات × 15", img: "images/bodyweight_squat.jpg" },
+                    { name: "تمرين القفز العالي - 3 مجموعات × 10", img: "images/high_jump.jpg" }
+                ],
+                core: [
+                    { name: "تمرين اللوح الخشبي الجانبي - 3 مجموعات × 30 ثانية", img: "images/side_plank.jpg" },
+                    { name: "تمرين الدراجة السريع - 3 مجموعات × 20", img: "images/fast_bicycle.jpg" }
+                ],
+            },
+            22: {
+                warmup: [
+                    { name: "قفز الحبل - 2 دقيقة", img: "images/warmup1.jpg" },
+                    { name: "تمارين التمدد الجانبي - 1 دقيقة", img: "images/warmup2.jpg" }
+                ],
+                main: [
+                    { name: "تمرين الضغط - 3 مجموعات × 15", img: "images/pushup.jpg" },
+                    { name: "تمرين البلانك الجانبي - 3 مجموعات × 30 ثانية", img: "images/side_plank.jpg" },
+                    { name: "تمرين السكوات - 3 مجموعات × 20", img: "images/squat.jpg" },
+                    { name: "تمرين الطعنات الأمامية - 3 مجموعات × 15", img: "images/lunges.jpg" }
+                ],
+                core: [
+                    { name: "تمرين الدراجة - 3 مجموعات × 20", img: "images/bicycle.jpg" },
+                    { name: "رفع الأرجل - 3 مجموعات × 12", img: "images/leg_raise.jpg" }
+                ],
+            },
+            23: {
+                warmup: [
+                    { name: "تمارين الركض في المكان - 2 دقيقة", img: "images/jogging.jpg" },
+                    { name: "تمارين التمدد الخلفي - 1 دقيقة", img: "images/back_stretch.jpg" }
+                ],
+                main: [
+                    { name: "تمرين العقلة - 3 مجموعات × 10", img: "images/pullup.jpg" },
+                    { name: "تمرين الضغط بيد واحدة - 3 مجموعات × 8", img: "images/one_arm_pushup.jpg" },
+                    { name: "تمرين القفز - 3 مجموعات × 12", img: "images/jump.jpg" },
+                    { name: "تمرين الدوران الجانبي - 3 مجموعات × 15", img: "images/side_twist.jpg" }
+                ],
+                core: [
+                    { name: "تمرين اللوح الخشبي - 3 مجموعات × 1 دقيقة", img: "images/plank.jpg" },
+                    { name: "تمرين رفع الجذع - 3 مجموعات × 15", img: "images/situp.jpg" }
+                ],
+            },
+            25: {
+                warmup: [
+                    { name: "تمارين القفز الخفيف - 2 دقيقة", img: "images/light_jump.jpg" },
+                    { name: "تمارين التمدد للأمام - 1 دقيقة", img: "images/front_stretch.jpg" }
+                ],
+                main: [
+                    { name: "تمرين الضغط المائل - 3 مجموعات × 12", img: "images/incline_pushup.jpg" },
+                    { name: "تمرين السكوات بالقفز - 3 مجموعات × 15", img: "images/jump_squat.jpg" },
+                    { name: "تمرين السحب الجانبي - 3 مجموعات × 10", img: "images/side_pull.jpg" },
+                    { name: "تمرين الطعنات الجانبية - 3 مجموعات × 15", img: "images/side_lunges.jpg" }
+                ],
+                core: [
+                    { name: "تمرين رفع الأرجل مع الدوران - 3 مجموعات × 12", img: "images/leg_raise_twist.jpg" },
+                    { name: "تمرين الكرنش - 3 مجموعات × 20", img: "images/crunch.jpg" }
+                ],
+            },
+            26: {
+                warmup: [
+                    { name: "تمارين الركض السريع - 2 دقيقة", img: "images/sprint.jpg" },
+                    { name: "تمارين التمدد للأرجل - 1 دقيقة", img: "images/leg_stretch.jpg" }
+                ],
+                main: [
+                    { name: "تمرين الضغط العادي - 3 مجموعات × 20", img: "images/pushup.jpg" },
+                    { name: "تمرين البلانك مع رفع الذراع - 3 مجموعات × 30 ثانية", img: "images/plank_arm_raise.jpg" },
+                    { name: "تمرين السكوات بوزن الجسم - 3 مجموعات × 15", img: "images/bodyweight_squat.jpg" },
+                    { name: "تمرين القفز العالي - 3 مجموعات × 10", img: "images/high_jump.jpg" }
+                ],
+                core: [
+                    { name: "تمرين اللوح الخشبي الجانبي - 3 مجموعات × 30 ثانية", img: "images/side_plank.jpg" },
+                    { name: "تمرين الدراجة السريع - 3 مجموعات × 20", img: "images/fast_bicycle.jpg" }
+                ],
+            },
+            29: {
+                warmup: [
+                    { name: "تمارين القفز الخفيف - 2 دقيقة", img: "images/light_jump.jpg" },
+                    { name: "تمارين التمدد للأمام - 1 دقيقة", img: "images/front_stretch.jpg" }
+                ],
+                main: [
+                    { name: "تمرين الضغط المائل - 3 مجموعات × 12", img: "images/incline_pushup.jpg" },
+                    { name: "تمرين السكوات بالقفز - 3 مجموعات × 15", img: "images/jump_squat.jpg" },
+                    { name: "تمرين السحب الجانبي - 3 مجموعات × 10", img: "images/side_pull.jpg" },
+                    { name: "تمرين الطعنات الجانبية - 3 مجموعات × 15", img: "images/side_lunges.jpg" }
+                ],
+                core: [
+                    { name: "تمرين رفع الأرجل مع الدوران - 3 مجموعات × 12", img: "images/leg_raise_twist.jpg" },
+                    { name: "تمرين الكرنش - 3 مجموعات × 20", img: "images/crunch.jpg" }
+                ],
+            },
+            30: {
+                warmup: [
+                    { name: "تمارين الركض السريع - 2 دقيقة", img: "images/sprint.jpg" },
+                    { name: "تمارين التمدد للأرجل - 1 دقيقة", img: "images/leg_stretch.jpg" }
+                ],
+                main: [
+                    { name: "تمرين الضغط العادي - 3 مجموعات × 20", img: "images/pushup.jpg" },
+                    { name: "تمرين البلانك مع رفع الذراع - 3 مجموعات × 30 ثانية", img: "images/plank_arm_raise.jpg" },
+                    { name: "تمرين السكوات بوزن الجسم - 3 مجموعات × 15", img: "images/bodyweight_squat.jpg" },
+                    { name: "تمرين القفز العالي - 3 مجموعات × 10", img: "images/high_jump.jpg" }
+                ],
+                core: [
+                    { name: "تمرين اللوح الخشبي الجانبي - 3 مجموعات × 30 ثانية", img: "images/side_plank.jpg" },
+                    { name: "تمرين الدراجة السريع - 3 مجموعات × 20", img: "images/fast_bicycle.jpg" }
+                ],
+            }
+        };
 
-        function startGlobalTimer() {
-            const timerDisplay = document.getElementById('timer');
-            if (globalInterval) clearInterval(globalInterval);
+        const completedDays = new Set();
 
-            timerDisplay.textContent = `Rest Timer: ${remainingTime} seconds`;
-            timerDisplay.classList.remove('over');
+        function selectDay(day) {
+            const buttons = document.querySelectorAll("#day-selector .days button");
+            buttons.forEach(button => button.classList.remove("active"));
+            const selectedButton = document.getElementById(`day${day}`);
+            selectedButton.classList.add("active");
+            loadDay(day);
+        }
 
-            globalInterval = setInterval(() => {
-                remainingTime--;
-                if (remainingTime <= 0) {
-                    clearInterval(globalInterval);
-                    timerDisplay.textContent = "Time Over!";
-                    timerDisplay.classList.add('over');
+        function loadDay(day) {
+            const dayData = workouts[day];
+            if (!dayData) {
+                document.getElementById('warmup-list').innerHTML = "<li>راحة اليوم!</li>";
+                document.getElementById('workout-list').innerHTML = "<li>راحة اليوم!</li>";
+                document.getElementById('core-list').innerHTML = "<li>راحة اليوم!</li>";
+                return;
+            }
+
+            const warmupList = dayData.warmup.map(item => `<li><img src="${item.img}" alt="تمرين"><span>${item.name}</span></li>`).join('');
+            const mainWorkoutList = dayData.main.map(item => `<li><img src="${item.img}" alt="تمرين"><span>${item.name}</span></li>`).join('');
+            const coreList = dayData.core.map(item => `<li><img src="${item.img}" alt="تمرين"><span>${item.name}</span></li>`).join('');
+
+            document.getElementById('warmup-list').innerHTML = warmupList;
+            document.getElementById('workout-list').innerHTML = mainWorkoutList;
+            document.getElementById('core-list').innerHTML = coreList;
+        }
+
+        let timer;
+        let timeLeft = 90;
+
+        function updateTimerDisplay() {
+            document.getElementById('timer-display').textContent = timeLeft;
+        }
+
+        function startTimer() {
+            if (timer) return;
+            timer = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateTimerDisplay();
                 } else {
-                    timerDisplay.textContent = `Rest Timer: ${remainingTime} seconds`;
+                    clearInterval(timer);
+                    timer = null;
                 }
             }, 1000);
         }
 
-        function pauseGlobalTimer() {
-            if (globalInterval) {
-                clearInterval(globalInterval);
-                globalInterval = null;
+        function pauseTimer() {
+            clearInterval(timer);
+            timer = null;
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            timeLeft = 90;
+            updateTimerDisplay();
+        }
+
+        function markDayComplete() {
+            const currentDayButton = document.querySelector("#day-selector .days button.active");
+            if (currentDayButton) {
+                const dayId = currentDayButton.id;
+                completedDays.add(dayId);
+                currentDayButton.classList.add("completed");
+                alert(`تم حفظ إنجاز ${currentDayButton.textContent} بنجاح!`);
+            } else {
+                alert("يرجى اختيار يوم أولاً!");
             }
         }
 
-        function resetGlobalTimer() {
-            if (globalInterval) clearInterval(globalInterval);
-            remainingTime = 90;
-            const timerDisplay = document.getElementById('timer');
-            timerDisplay.textContent = `Rest Timer: ${remainingTime} seconds`;
-            timerDisplay.classList.remove('over');
-            startGlobalTimer();
+        function cancelDayCompletion() {
+            const currentDayButton = document.querySelector("#day-selector .days button.active");
+            if (currentDayButton) {
+                const dayId = currentDayButton.id;
+                if (completedDays.has(dayId)) {
+                    completedDays.delete(dayId);
+                    currentDayButton.classList.remove("completed");
+                    alert(`تم إلغاء إنجاز ${currentDayButton.textContent}.`);
+                } else {
+                    alert("اليوم لم يتم حفظه كمكتمل بعد.");
+                }
+            } else {
+                alert("يرجى اختيار يوم أولاً!");
+            }
         }
-
-        // Initialize first day
-        updateDay();
     </script>
 </body>
 </html>
