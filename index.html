@@ -26,12 +26,12 @@
 
         header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         header h1 {
             font-size: 2.5rem;
-            color: #ff7f00;
+            color: #04e404;
         }
 
         .hidden {
@@ -62,8 +62,8 @@
         }
 
         .home button {
-            background-color: #ff7f00;
-            color: white;
+            background-color: #04e404;
+            color: black;
             border: none;
             padding: 10px 20px;
             margin: 10px;
@@ -75,7 +75,7 @@
         }
 
         .home button:hover {
-            background-color: #cc6600;
+            background-color: #a0f0a0;
             transform: scale(1.05);
         }
 
@@ -86,12 +86,12 @@
         #day-selector {
             margin-bottom: 20px;
             padding: 15px;
-            background: #fff3e0;
+            background: #f6fcf2;
             border-radius: 8px;
         }
 
         #day-selector .days button {
-            background-color: #ff7f00;
+            background-color: #04e404;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -105,7 +105,7 @@
         }
 
         #day-selector .days button:hover {
-            background-color: #cc6600;
+            background-color: #7d8f72;
             transform: scale(1.05);
         }
 
@@ -114,7 +114,7 @@
         }
 
         #day-selector .days button.completed {
-            background-color: #28a745;
+            background-color: #56565c;
             color: white;
         }
 
@@ -126,7 +126,7 @@
         #workout-details h2 {
             text-align: center;
             margin-bottom: 20px;
-            color: #cc6600;
+            color: #008000;
         }
 
         section {
@@ -143,7 +143,7 @@
             margin: 5px 0;
             padding: 10px;
             border-radius: 5px;
-            border-left: 4px solid #ff7f00;
+            border-left: 4px solid #04e404;
             display: flex;
             align-items: center;
         }
@@ -160,8 +160,8 @@
             text-align: center;
             margin-top: 20px;
             padding: 20px;
-            background: #ff7f00;
-            color: white;
+            background: #04e404;
+            color: black;
             border-radius: 8px;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
         }
@@ -170,19 +170,19 @@
             font-size: 3rem;
             margin-bottom: 15px;
             font-weight: bold;
-            background: url('images/timer-bg.png') no-repeat center/cover;
+            background: url('images/timer.jpg') no-repeat center/cover;
             color: white;
             border-radius: 10px;
-            padding: 20px;
+            padding: 60px;
             display: inline-block;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-            border: 2px solid #ff7f00;
+            border: 2px solid #FFFFFF;
             text-align: center;
         }
 
         #timer-controls button {
             background-color: white;
-            color: #ff7f00;
+            color: #000000;
             border: 2px solid white;
             padding: 10px 15px;
             margin: 5px;
@@ -193,7 +193,7 @@
         }
 
         #timer-controls button:hover {
-            background-color: #cc6600;
+            background-color: #7d8f72;
             color: white;
             transform: translateY(-2px);
         }
@@ -208,7 +208,7 @@
         }
 
         #complete-button button {
-            background-color: #28a745;
+            background-color: #56565c;
             color: white;
             border: none;
             padding: 10px 20px;
@@ -220,7 +220,7 @@
         }
 
         #complete-button button:hover {
-            background-color: #218838;
+            background-color: #a9a9b0;
             transform: scale(1.05);
         }
 
@@ -265,14 +265,14 @@
 <body>
     <div id="home-page" class="app-container home">
         <header>
-            <h1>برنامج تمارين الكالستنكس</h1>
+            <h1>برنامج تمارين الكالستنكس المستوى التحضيري</h1>
         </header>
-        <img src="images/logo.png" alt="شعار التطبيق">
-        <h2>مرحبًا بك في تطبيق تمارين الكالستنكس!</h2>
-        <img class="welcome-img" src="images/welcome.png" alt="صورة ترحيبية">
-        <p>هذا التطبيق يساعدك على تنظيم تمارين الكالستنكس اليومية.</p>
+        
+        <h2></h2>
+        <img class="welcome-img" src="images/pot.png" alt="صورة ترحيبية">
+        <p></p>
         <button onclick="navigateTo('exercise-page')">ابدأ التمارين</button>
-        <button onclick="navigateTo('extra-page')">صفحة تمارين إضافية</button>
+        <button onclick="navigateTo('extra-page')">عن التمارين والجولات</button>
         <button onclick="showInfo()">عن البرنامج</button>
     </div>
 
@@ -336,7 +336,7 @@
                 </ul>
             </div>
             <div id="timer-controls">
-                <h3>العداد التنازلي</h3>
+                <h3>العداد التنازلي لفترة الراحة</h3>
                 <p id="timer-display">90</p>
                 <button onclick="startTimer()">ابدأ</button>
                 <button onclick="pauseTimer()">إيقاف</button>
@@ -356,9 +356,29 @@
 
     <div id="extra-page" class="app-container hidden">
         <header>
-            <h1>تمارين إضافية</h1>
+            <h1>التمارين والجولات</h1>
         </header>
-        <p>مرحبًا بك في صفحة التمارين الإضافية!</p>
+        <p>تمارين كاليسثينكس المستوى التحضيري
+<br>-------------------------------------------------------------------
+
+<br>• تبدأ بعملية الإحماء
+<br>قم بأداء الإحماء لمدة 10 - 15 دقيقة
+<br>-------------------------------------------------------------------
+
+<br>• الدخول في التمرين الاساسي:<br>
+قم بأداء تمرين (1) ثم خذ راحة مدة (1-2 دقيقة) ثم إنتقل إلى التمرين (2) ثم خذ راحة مدة (1-2 دقيقة) ثم إنتقل إلى التمرين (3) ثم خذ راحة مدة (1-2 دقيقة) ثم إنتقل إلى التمرين (4) 
+*وهكذا تعتبر أتممت جولة من أصل 3-4 جولات من التمرين الأساسي.
+<br>-------------------------------------------------------------------
+
+<br>• تمارين البطن والكور:
+<br>• قم بإداء تمارين البطن على المتوازي يليه مباشرة التمرين على العقلة ثم راحة مدة (1-2 دقيقة) وهنا تعتبر انتهيت من جولة كاملة ثم قم بإعادة التمارين بنفس الطريقة مرة أخرى لـ 3 جولات.
+<br>• تمارين الكور قم بأداء تمرين (1) ثم خذ راحة مدة (1-2 دقيقة) ثم إنتقل إلى التمرين (2) ثم خذ راحة مدة (1-2 دقيقة) 
+*وهكذا تعتبر أتممت جولة من أصل 3-4 جولات للتمرينين.
+<br>-------------------------------------------------------------------
+
+<br>*ملاحظة*<br>
+طريقة أداء التمرين بالشكل الصحيح كما هو موضح أهم من عدد العدات في التمرين.
+<br>---------------------------------------------------</p>
         <button onclick="navigateTo('home-page')">العودة إلى الصفحة الرئيسية</button>
     </div>
 
@@ -371,20 +391,20 @@
         }
 
         function showInfo() {
-            alert("هذا التطبيق مصمم لمساعدتك على ممارسة تمارين الكالستنكس بفعالية وتنظيم.");
+            alert("هذا التطبيق مصمم لمساعدتك على ممارسة تمارين الكالستنكس من الصفر بفعالية وتنظيم.");
         }
 
         const workouts = {
             1: {
                 warmup: [
-                    { name: "القفز - 30 ثانية", img: "images/jumping_ jacks.gif" },
+                    { name: "القفز مع فتح القدمين والذراعين - 30 ثانية", img: "images/jumping_ jacks.gif" },
                     { name: "احماء واطالات الاكتاف والذراعين والرسغ للجانبين", img: "images/stretching.gif" }
                 ],
                 main: [
-                    { name: "الضغط بثني الركبتين 3 مجموعات × 12 - 10 - 8", img: "images/Knee-Push-Up.gif" },
-                    { name: "التعلق على البار لاقصى وقت ممكن 3 مجموعات", img: "images/hanging.png" },
-                    { name: "ضغط ترايسبس بستخدام دكة مع ثني الركبتين 3 مجموعات × 14 - 12 - 10", img: "images/BENCH_DIPS.gif" },
-                    { name: "عقلة استرالية مع المحافظ على ثني الركبتين 90 درجة 3 مجموعات × 12 - 10 - 8", img: "images/Australian_pull_up_bent_knee.gif" }
+                    { name: "الضغط بثني الركبتين 3-4 مجموعات", img: "images/knee-push-ups.gif" },
+                    { name: "التعلق على البار لاقصى وقت ممكن 3-4 مجموعات", img: "images/hanging.png" },
+                    { name: "ضغط ترايسبس على مرتفع مع ثني الركبتين 3-4 مجموعات", img: "images/BENCH_DIPS.gif" },
+                    { name: "عقلة استرالية مع المحافظ على ثني الركبتين 90 درجة 3-4 مجموعات", img: "images/Australian_pull_up_bent_knee.gif" }
                 ],
                 core: [
                     { name: "على المتوازي رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/captains-chair-knee-raise.gif" },
@@ -395,14 +415,14 @@
             },
             2: {
                 warmup: [
-                    { name: "القفز - 30 ثانية", img: "images/jumping_ jacks.gif" },
+                    { name: "القفز مع فتح القدمين والذراعين - 30 ثانية", img: "images/jumping_ jacks.gif" },
                     { name: "احماء واطالات الاكتاف والذراعين والرسغ للجانبين", img: "images/stretching.gif" }
                 ],
                 main: [
-                    { name: "التعلق على البار بقبضة معكوسة لاقصى وقت ممكن 3 مجموعات", img: "images/chin-ups-hanging.jpg" },
-                    { name: "السير على اليدين للامام ثم للخلف مع المحافضة على استقامة اليدين والقدمين والظهر 3 مجموعات × 8 - 6 - 4", img: "images/Inchworms.gif" },
-                    { name: "عقلة استرالية بقبضة معكوسة مع المحافظ على ثني الركبتين 90 درجة 3 مجموعات × 12 - 10 - 8", img: "images/Australian_chin_up_bent_knee.gif" },
-                    { name: "ضغط ترايسبس بستخدام دكة مع ثني الركبتين 3 مجموعات × 14 - 12 - 10", img: "images/BENCH_DIPS.gif" }
+                    { name: "التعلق على البار بقبضة معكوسة لاقصى وقت ممكن 3-4 مجموعات", img: "images/chin-ups-hanging.jpg" },
+                    { name: "السير على اليدين للامام ثم للخلف مع المحافضة على استقامة اليدين والقدمين والظهر 3-4 مجموعات", img: "images/Inchworms.gif" },
+                    { name: "عقلة استرالية بقبضة معكوسة مع المحافظ على ثني الركبتين 90 درجة 3-4 مجموعات", img: "images/Australian_chin_up_bent_knee.gif" },
+                    { name: "ضغط ترايسبس على مرتفع مع ثني الركبتين 3-4 مجموعات", img: "images/BENCH_DIPS.gif" }
                 ],
                 core: [
                     { name: "على المتوازي رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/captains-chair-knee-raise.gif" },
@@ -411,14 +431,14 @@
             },
             4: {
                 warmup: [
-                    { name: "القفز - 30 ثانية", img: "images/jumping_ jacks.gif" },
+                    { name: "القفز مع فتح القدمين والذراعين - 30 ثانية", img: "images/jumping_ jacks.gif" },
                     { name: "احماء واطالات الاكتاف والذراعين والرسغ للجانبين", img: "images/stretching.gif" }
                 ],
                 main: [
-                    { name: "الضغط بثني الركبتين 3 مجموعات × 12 - 10 - 8", img: "images/Knee-Push-Up.gif" },
-                    { name: "التعلق على البار لاقصى وقت ممكن 3 مجموعات", img: "images/hanging.png" },
-                    { name: "ضغط ترايسبس بستخدام دكة مع ثني الركبتين 3 مجموعات × 14 - 12 - 10", img: "images/BENCH_DIPS.gif" },
-                    { name: "عقلة استرالية مع المحافظ على ثني الركبتين 90 درجة 3 مجموعات × 12 - 10 - 8", img: "images/Australian_pull_up_bent_knee.gif" }
+                    { name: "الضغط بثني الركبتين 3-4 مجموعات", img: "images/knee-push-ups.gif" },
+                    { name: "التعلق على البار لاقصى وقت ممكن 3-4 مجموعات", img: "images/hanging.png" },
+                    { name: "ضغط ترايسبس على مرتفع مع ثني الركبتين 3-4 مجموعات", img: "images/BENCH_DIPS.gif" },
+                    { name: "عقلة استرالية مع المحافظ على ثني الركبتين 90 درجة 3-4 مجموعات", img: "images/Australian_pull_up_bent_knee.gif" }
                 ],
                 core: [
                     { name: "على المتوازي رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/captains-chair-knee-raise.gif" },
@@ -429,14 +449,14 @@
             },
             5: {
                 warmup: [
-                    { name: "القفز - 30 ثانية", img: "images/jumping_ jacks.gif" },
+                    { name: "القفز مع فتح القدمين والذراعين - 30 ثانية", img: "images/jumping_ jacks.gif" },
                     { name: "احماء واطالات الاكتاف والذراعين والرسغ للجانبين", img: "images/stretching.gif" }
                 ],
                 main: [
-                    { name: "التعلق على البار بقبضة معكوسة لاقصى وقت ممكن 3 مجموعات", img: "images/chin-ups-hanging.jpg" },
-                    { name: "السير على اليدين للامام ثم للخلف مع المحافضة على استقامة اليدين والقدمين والظهر 3 مجموعات × 8 - 6 - 4", img: "images/Inchworms.gif" },
-                    { name: "عقلة استرالية بقبضة معكوسة مع المحافظ على ثني الركبتين 90 درجة 3 مجموعات × 12 - 10 - 8", img: "images/Australian_chin_up_bent_knee.gif" },
-                    { name: "ضغط ترايسبس بستخدام دكة مع ثني الركبتين 3 مجموعات × 14 - 12 - 10", img: "images/BENCH_DIPS.gif" }
+                    { name: "التعلق على البار بقبضة معكوسة لاقصى وقت ممكن 3-4 مجموعات", img: "images/chin-ups-hanging.jpg" },
+                    { name: "السير على اليدين للامام ثم للخلف مع المحافضة على استقامة اليدين والقدمين والظهر 3-4 مجموعات", img: "images/Inchworms.gif" },
+                    { name: "عقلة استرالية بقبضة معكوسة مع المحافظ على ثني الركبتين 90 درجة 3-4 مجموعات", img: "images/Australian_chin_up_bent_knee.gif" },
+                    { name: "ضغط ترايسبس على مرتفع مع ثني الركبتين 3-4 مجموعات", img: "images/BENCH_DIPS.gif" }
                 ],
                 core: [
                     { name: "على المتوازي رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/captains-chair-knee-raise.gif" },
@@ -445,14 +465,14 @@
             },
             8: {
                 warmup: [
-                    { name: "القفز - 30 ثانية", img: "images/jumping_ jacks.gif" },
+                    { name: "القفز مع فتح القدمين والذراعين - 30 ثانية", img: "images/jumping_ jacks.gif" },
                     { name: "احماء واطالات الاكتاف والذراعين والرسغ للجانبين", img: "images/stretching.gif" }
                 ],
                 main: [
-                    { name: "التعلق على البار بقبضة ضيقة لاقصى وقت ممكن 3 مجموعات", img: "images/close_grip_hanging.jpg" },
-                    { name: "الضغط بثني الركبتين 3 مجموعات × 12 - 10 - 8", img: "images/Knee-Push-Up.gif" },
-                    { name: "عقلة استرالية بقبضة ضيقة مع المحافظ على ثني الركبتين 90 درجة 3 مجموعات × 12 - 10 - 8", img: "images/Australian_close_grip_pull_up_bent_knee.gif" },
-                    { name: "السير على اليدين من فوق دكه للامام ثم للخلف مع المحافضة على استقامة اليدين والقدمين والظهر 3 مجموعات × 8 - 6 - 4", img: "images/decline_inchworm.gif" }
+                    { name: "التعلق على البار بقبضة ضيقة لاقصى وقت ممكن 3-4 مجموعات", img: "images/close_grip_hanging.png" },
+                    { name: "الضغط بثني الركبتين 3-4 مجموعات", img: "images/knee-push-ups.gif" },
+                    { name: "عقلة استرالية بقبضة ضيقة مع المحافظ على ثني الركبتين 90 درجة 3-4 مجموعات", img: "images/Australian_close_grip_pull_up_bent_knee.gif" },
+                    { name: "السير على اليدين من فوق مرتفع للامام ثم للخلف مع المحافضة على استقامة اليدين والقدمين 3-4 مجموعات", img: "images/decline_inchworm.gif" }
                 ],
                 core: [
                     { name: "على المتوازي رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/captains-chair-knee-raise.gif" },
@@ -463,14 +483,14 @@
             },
             9: {
                 warmup: [
-                    { name: "القفز - 30 ثانية", img: "images/jumping_ jacks.gif" },
+                    { name: "القفز مع فتح القدمين والذراعين - 30 ثانية", img: "images/jumping_ jacks.gif" },
                     { name: "احماء واطالات الاكتاف والذراعين والرسغ للجانبين", img: "images/stretching.gif" }
                 ],
                 main: [
-                    { name: "على المتوازي المحافظه على استقامة الذراعين وثبات الجذع ثم الطلوع والنزول عن طريق الاكتاف من الامام ولوح الكتف من الخلف 3 مجموعات × 12 - 10 - 8", img: "images/dip_shrugs.gif" },
-                    { name: "التعلق على البار بقبضة ضيقة معكوسة لاقصى وقت ممكن 3 مجموعات", img: "images/close_chin_up_hanging.png" },
-                    { name: "السير على اليدين للامام ثم للخلف مع المحافضة على استقامة اليدين والقدمين والظهر 3 مجموعات × 8 - 6 - 4", img: "images/Inchworms.gif" },
-                    { name: "عقلة استرالية بقبضة ضيقة معكوسة مع المحافظ على ثني الركبتين 90 درجة 3 مجموعات × 12 - 10 - 8", img: "images/Australian_close_grip_pull_up_bent_knee.gif" }
+                    { name: "على المتوازي الطلوع والنزول عن طريق الاكتاف من الامام ولوح الكتف من الخلف 3-4 مجموعات", img: "images/dip_shrugs.gif" },
+                    { name: "التعلق على البار بقبضة ضيقة معكوسة لاقصى وقت ممكن 3-4 مجموعات", img: "images/close_chin_up_hanging.png" },
+                    { name: "السير على اليدين للامام ثم للخلف مع المحافضة على استقامة اليدين والقدمين والظهر 3-4 مجموعات", img: "images/Inchworms.gif" },
+                    { name: "عقلة استرالية بقبضة ضيقة معكوسة مع المحافظ على ثني الركبتين 90 درجة 3-4 مجموعات", img: "images/Australian_close_grip_pull_up_bent_knee.gif" }
                 ],
                 core: [
                     { name: "على المتوازي رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/captains-chair-knee-raise.gif" },
@@ -479,194 +499,206 @@
             },
             11: {
                 warmup: [
-                    { name: "تمارين القفز الخفيف - 2 دقيقة", img: "images/light_jump.jpg" },
-                    { name: "تمارين التمدد للأمام - 1 دقيقة", img: "images/front_stretch.jpg" }
+                    { name: "القفز مع فتح القدمين والذراعين - 30 ثانية", img: "images/jumping_ jacks.gif" },
+                    { name: "احماء واطالات الاكتاف والذراعين والرسغ للجانبين", img: "images/stretching.gif" }
                 ],
                 main: [
-                    { name: "تمرين الضغط المائل - 3 مجموعات × 12", img: "images/incline_pushup.jpg" },
-                    { name: "تمرين السكوات بالقفز - 3 مجموعات × 15", img: "images/jump_squat.jpg" },
-                    { name: "تمرين السحب الجانبي - 3 مجموعات × 10", img: "images/side_pull.jpg" },
-                    { name: "تمرين الطعنات الجانبية - 3 مجموعات × 15", img: "images/side_lunges.jpg" }
+                    { name: "التعلق على البار بقبضة ضيقة لاقصى وقت ممكن 3-4 مجموعات", img: "images/close_grip_hanging.png" },
+                    { name: "الضغط بثني الركبتين 3-4 مجموعات", img: "images/knee-push-ups.gif" },
+                    { name: "عقلة استرالية بقبضة ضيقة مع المحافظ على ثني الركبتين 90 درجة 3-4 مجموعات", img: "images/Australian_close_grip_pull_up_bent_knee.gif" },
+                    { name: "السير على اليدين من فوق مرتفع للامام ثم للخلف مع المحافضة على استقامة اليدين والقدمين 3-4 مجموعات", img: "images/decline_inchworm.gif" }
                 ],
                 core: [
-                    { name: "تمرين رفع الأرجل مع الدوران - 3 مجموعات × 12", img: "images/leg_raise_twist.jpg" },
-                    { name: "تمرين الكرنش - 3 مجموعات × 20", img: "images/crunch.jpg" }
+                    { name: "على المتوازي رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/captains-chair-knee-raise.gif" },
+                    { name: "على العقلة رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/hanging-leg-raise-movement.gif" },
+                    { name: "تمرين البلانك ثبات 30 ثانية 3 مجموعات", img: "images/plank.gif" },
+                    { name: "تمرين هولو بودي ثبات 30 ثانية 3 مجموعات", img: "images/hollow_body_1.png" }
                 ],
             },
             12: {
                 warmup: [
-                    { name: "تمارين الركض السريع - 2 دقيقة", img: "images/sprint.jpg" },
-                    { name: "تمارين التمدد للأرجل - 1 دقيقة", img: "images/leg_stretch.jpg" }
+                    { name: "القفز مع فتح القدمين والذراعين - 30 ثانية", img: "images/jumping_ jacks.gif" },
+                    { name: "احماء واطالات الاكتاف والذراعين والرسغ للجانبين", img: "images/stretching.gif" }
                 ],
                 main: [
-                    { name: "تمرين الضغط العادي - 3 مجموعات × 20", img: "images/pushup.jpg" },
-                    { name: "تمرين البلانك مع رفع الذراع - 3 مجموعات × 30 ثانية", img: "images/plank_arm_raise.jpg" },
-                    { name: "تمرين السكوات بوزن الجسم - 3 مجموعات × 15", img: "images/bodyweight_squat.jpg" },
-                    { name: "تمرين القفز العالي - 3 مجموعات × 10", img: "images/high_jump.jpg" }
+                    { name: "على المتوازي الطلوع والنزول عن طريق الاكتاف من الامام ولوح الكتف من الخلف 3-4 مجموعات", img: "images/dip_shrugs.gif" },
+                    { name: "التعلق على البار بقبضة ضيقة معكوسة لاقصى وقت ممكن 3-4 مجموعات", img: "images/close_chin_up_hanging.png" },
+                    { name: "السير على اليدين للامام ثم للخلف مع المحافضة على استقامة اليدين والقدمين والظهر 3-4 مجموعات", img: "images/Inchworms.gif" },
+                    { name: "عقلة استرالية بقبضة ضيقة معكوسة مع المحافظ على ثني الركبتين 90 درجة 3-4 مجموعات", img: "images/Australian_close_grip_pull_up_bent_knee.gif" }
                 ],
                 core: [
-                    { name: "تمرين اللوح الخشبي الجانبي - 3 مجموعات × 30 ثانية", img: "images/side_plank.jpg" },
-                    { name: "تمرين الدراجة السريع - 3 مجموعات × 20", img: "images/fast_bicycle.jpg" }
+                    { name: "على المتوازي رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/captains-chair-knee-raise.gif" },
+                    { name: "على العقلة رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/hanging-leg-raise-movement.gif" }
                 ],
             },
             15: {
                 warmup: [
-                    { name: "قفز الحبل - 2 دقيقة", img: "images/warmup1.jpg" },
-                    { name: "تمارين التمدد الجانبي - 1 دقيقة", img: "images/warmup2.jpg" }
+                    { name: "القفز مع فتح القدمين والذراعين - 30 ثانية", img: "images/jumping_ jacks.gif" },
+                    { name: "احماء واطالات الاكتاف والذراعين والرسغ للجانبين", img: "images/stretching.gif" }
                 ],
                 main: [
-                    { name: "تمرين الضغط - 3 مجموعات × 15", img: "images/pushup.jpg" },
-                    { name: "تمرين البلانك الجانبي - 3 مجموعات × 30 ثانية", img: "images/side_plank.jpg" },
-                    { name: "تمرين السكوات - 3 مجموعات × 20", img: "images/squat.jpg" },
-                    { name: "تمرين الطعنات الأمامية - 3 مجموعات × 15", img: "images/lunges.jpg" }
+                    { name: "القفز لوضعية العقلة ثم النزول للاسف بتحكم مع فرد الذراعين قبل ملامسة الارض 3-4 مجموعات", img: "images/negative_pull_up.gif" },
+                    { name: "ضغط ضيق بثني الركبتين والكفين قريبين من بعض 3-4 مجموعات", img: "images/Knee_Diamond_Push-Up.gif" },
+                    { name: "عقلة استرالية والارجل مفرودة 3-4 مجموعات", img: "images/Australian_pull_up.gif" },
+                    { name: "ضغط ترايسبس بستخدام مرتفع والارجل مفرودة 3-4 مجموعات", img: "images/CHAIR-DIPS.gif" }
                 ],
                 core: [
-                    { name: "تمرين الدراجة - 3 مجموعات × 20", img: "images/bicycle.jpg" },
-                    { name: "رفع الأرجل - 3 مجموعات × 12", img: "images/leg_raise.jpg" }
+                    { name: "على المتوازي رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/captains-chair-knee-raise.gif" },
+                    { name: "على العقلة رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/hanging-leg-raise-movement.gif" },
+                    { name: "تمرين البلانك ثبات 30 ثانية 3 مجموعات", img: "images/plank.gif" },
+                    { name: "تمرين هولو بودي ثبات 30 ثانية 3 مجموعات", img: "images/hollow_body_1.png" }
                 ],
             },
             16: {
                 warmup: [
-                    { name: "تمارين الركض في المكان - 2 دقيقة", img: "images/jogging.jpg" },
-                    { name: "تمارين التمدد الخلفي - 1 دقيقة", img: "images/back_stretch.jpg" }
+                    { name: "القفز مع فتح القدمين والذراعين - 30 ثانية", img: "images/jumping_ jacks.gif" },
+                    { name: "احماء واطالات الاكتاف والذراعين والرسغ للجانبين", img: "images/stretching.gif" }
                 ],
                 main: [
-                    { name: "تمرين العقلة - 3 مجموعات × 10", img: "images/pullup.jpg" },
-                    { name: "تمرين الضغط بيد واحدة - 3 مجموعات × 8", img: "images/one_arm_pushup.jpg" },
-                    { name: "تمرين القفز - 3 مجموعات × 12", img: "images/jump.jpg" },
-                    { name: "تمرين الدوران الجانبي - 3 مجموعات × 15", img: "images/side_twist.jpg" }
+                    { name: "النزول والطلوع على المتوازي بثني المرفقين بشكل بسيط مع المحافظه على ثبات الجسم 3-4 مجموعات", img: "images/Dips.gif" },
+                    { name: "القفز لوضعية العقلة بقبضة معكوسة ثم النزول للاسف بتحكم مع فرد الذراعين قبل ملامسة الارض 3-4 مجموعات", img: "images/negative_chin_up.gif" },
+                    { name: "ضغط ترايسبس بستخدام مرتفع والارجل مفرودة 3-4 مجموعات", img: "images/CHAIR-DIPS.gif" },
+                    { name: "عقلة استرالية قبضة معكوسة والارجل مفرودة 3-4 مجموعات", img: "images/Australian_chin_up.gif" }
                 ],
                 core: [
-                    { name: "تمرين اللوح الخشبي - 3 مجموعات × 1 دقيقة", img: "images/plank.jpg" },
-                    { name: "تمرين رفع الجذع - 3 مجموعات × 15", img: "images/situp.jpg" }
+                    { name: "على المتوازي رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/captains-chair-knee-raise.gif" },
+                    { name: "على العقلة رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/hanging-leg-raise-movement.gif" }
                 ],
             },
             18: {
                 warmup: [
-                    { name: "تمارين القفز الخفيف - 2 دقيقة", img: "images/light_jump.jpg" },
-                    { name: "تمارين التمدد للأمام - 1 دقيقة", img: "images/front_stretch.jpg" }
+                    { name: "القفز مع فتح القدمين والذراعين - 30 ثانية", img: "images/jumping_ jacks.gif" },
+                    { name: "احماء واطالات الاكتاف والذراعين والرسغ للجانبين", img: "images/stretching.gif" }
                 ],
                 main: [
-                    { name: "تمرين الضغط المائل - 3 مجموعات × 12", img: "images/incline_pushup.jpg" },
-                    { name: "تمرين السكوات بالقفز - 3 مجموعات × 15", img: "images/jump_squat.jpg" },
-                    { name: "تمرين السحب الجانبي - 3 مجموعات × 10", img: "images/side_pull.jpg" },
-                    { name: "تمرين الطعنات الجانبية - 3 مجموعات × 15", img: "images/side_lunges.jpg" }
+                    { name: "القفز لوضعية العقلة ثم النزول للاسف بتحكم مع فرد الذراعين قبل ملامسة الارض 3-4 مجموعات", img: "images/negative_pull_up.gif" },
+                    { name: "ضغط ضيق بثني الركبتين والكفين قريبين من بعض 3-4 مجموعات", img: "images/Knee_Diamond_Push-Up.gif" },
+                    { name: "عقلة استرالية والارجل مفرودة 3-4 مجموعات", img: "images/Australian_pull_up.gif" },
+                    { name: "ضغط ترايسبس بستخدام مرتفع والارجل مفرودة 3-4 مجموعات", img: "images/CHAIR-DIPS.gif" }
                 ],
                 core: [
-                    { name: "تمرين رفع الأرجل مع الدوران - 3 مجموعات × 12", img: "images/leg_raise_twist.jpg" },
-                    { name: "تمرين الكرنش - 3 مجموعات × 20", img: "images/crunch.jpg" }
+                    { name: "على المتوازي رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/captains-chair-knee-raise.gif" },
+                    { name: "على العقلة رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/hanging-leg-raise-movement.gif" },
+                    { name: "تمرين البلانك ثبات 30 ثانية 3 مجموعات", img: "images/plank.gif" },
+                    { name: "تمرين هولو بودي ثبات 30 ثانية 3 مجموعات", img: "images/hollow_body_1.png" }
                 ],
             },
             19: {
                 warmup: [
-                    { name: "تمارين الركض السريع - 2 دقيقة", img: "images/sprint.jpg" },
-                    { name: "تمارين التمدد للأرجل - 1 دقيقة", img: "images/leg_stretch.jpg" }
+                    { name: "القفز مع فتح القدمين والذراعين - 30 ثانية", img: "images/jumping_ jacks.gif" },
+                    { name: "احماء واطالات الاكتاف والذراعين والرسغ للجانبين", img: "images/stretching.gif" }
                 ],
                 main: [
-                    { name: "تمرين الضغط العادي - 3 مجموعات × 20", img: "images/pushup.jpg" },
-                    { name: "تمرين البلانك مع رفع الذراع - 3 مجموعات × 30 ثانية", img: "images/plank_arm_raise.jpg" },
-                    { name: "تمرين السكوات بوزن الجسم - 3 مجموعات × 15", img: "images/bodyweight_squat.jpg" },
-                    { name: "تمرين القفز العالي - 3 مجموعات × 10", img: "images/high_jump.jpg" }
+                    { name: "النزول والطلوع على المتوازي بثني المرفقين بشكل بسيط مع المحافظه على ثبات الجسم 3-4 مجموعات", img: "images/Dips.gif" },
+                    { name: "القفز لوضعية العقلة بقبضة معكوسة ثم النزول للاسف بتحكم مع فرد الذراعين قبل ملامسة الارض 3-4 مجموعات", img: "images/negative_chin_up.gif" },
+                    { name: "ضغط ترايسبس بستخدام مرتفع والارجل مفرودة 3-4 مجموعات", img: "images/CHAIR-DIPS.gif" },
+                    { name: "عقلة استرالية قبضة معكوسة والارجل مفرودة 3-4 مجموعات", img: "images/Australian_chin_up.gif" }
                 ],
                 core: [
-                    { name: "تمرين اللوح الخشبي الجانبي - 3 مجموعات × 30 ثانية", img: "images/side_plank.jpg" },
-                    { name: "تمرين الدراجة السريع - 3 مجموعات × 20", img: "images/fast_bicycle.jpg" }
+                    { name: "على المتوازي رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/captains-chair-knee-raise.gif" },
+                    { name: "على العقلة رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/hanging-leg-raise-movement.gif" }
                 ],
             },
             22: {
                 warmup: [
-                    { name: "قفز الحبل - 2 دقيقة", img: "images/warmup1.jpg" },
-                    { name: "تمارين التمدد الجانبي - 1 دقيقة", img: "images/warmup2.jpg" }
+                    { name: "القفز مع فتح القدمين والذراعين - 30 ثانية", img: "images/jumping_ jacks.gif" },
+                    { name: "احماء واطالات الاكتاف والذراعين والرسغ للجانبين", img: "images/stretching.gif" }
                 ],
                 main: [
-                    { name: "تمرين الضغط - 3 مجموعات × 15", img: "images/pushup.jpg" },
-                    { name: "تمرين البلانك الجانبي - 3 مجموعات × 30 ثانية", img: "images/side_plank.jpg" },
-                    { name: "تمرين السكوات - 3 مجموعات × 20", img: "images/squat.jpg" },
-                    { name: "تمرين الطعنات الأمامية - 3 مجموعات × 15", img: "images/lunges.jpg" }
+                    { name: "القفز لوضعية العقلة ضيق ثم النزول للاسف بتحكم مع فرد الذراعين قبل ملامسة الارض 3-4 مجموعات", img: "images/negative_close_pull_up.gif" },
+                    { name: "الضغط على سطح مرتفع مع الحفاظ على استقامة الركبتين 3-4 مجموعات", img: "images/incline-push-up-bench.gif" },
+                    { name: "عقلة استرالية قبضة ضيقة والارجل مفرودة 3-4 مجموعات", img: "images/Australian_close_pull_up.gif" },
+                    { name: "السير على اليدين من فوق مرتفع للامام ثم للخلف مع المحافضة على استقامة اليدين والقدمين 3-4 مجموعات", img: "images/decline_inchworm.gif" }
                 ],
                 core: [
-                    { name: "تمرين الدراجة - 3 مجموعات × 20", img: "images/bicycle.jpg" },
-                    { name: "رفع الأرجل - 3 مجموعات × 12", img: "images/leg_raise.jpg" }
+                    { name: "على المتوازي رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/captains-chair-knee-raise.gif" },
+                    { name: "على العقلة رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/hanging-leg-raise-movement.gif" },
+                    { name: "تمرين البلانك ثبات 30 ثانية 3 مجموعات", img: "images/plank.gif" },
+                    { name: "تمرين هولو بودي ثبات 30 ثانية 3 مجموعات", img: "images/hollow_body_1.png" }
                 ],
             },
             23: {
                 warmup: [
-                    { name: "تمارين الركض في المكان - 2 دقيقة", img: "images/jogging.jpg" },
-                    { name: "تمارين التمدد الخلفي - 1 دقيقة", img: "images/back_stretch.jpg" }
+                    { name: "القفز مع فتح القدمين والذراعين - 30 ثانية", img: "images/jumping_ jacks.gif" },
+                    { name: "احماء واطالات الاكتاف والذراعين والرسغ للجانبين", img: "images/stretching.gif" }
                 ],
                 main: [
-                    { name: "تمرين العقلة - 3 مجموعات × 10", img: "images/pullup.jpg" },
-                    { name: "تمرين الضغط بيد واحدة - 3 مجموعات × 8", img: "images/one_arm_pushup.jpg" },
-                    { name: "تمرين القفز - 3 مجموعات × 12", img: "images/jump.jpg" },
-                    { name: "تمرين الدوران الجانبي - 3 مجموعات × 15", img: "images/side_twist.jpg" }
+                    { name: "ضغط ضيق على سطح مرتفع مع الحفاظ على استقامة الركبتين 3-4 مجموعات", img: "images/incline_close_push_up.gif" },
+                    { name: "القفز لوضعية العقلة بقبضة معكوسة ضيقة ثم النزول للاسف بتحكم مع فرد الذراعين قبل ملامسة الارض 3-4 مجموعات", img: "images/negative_close_chin_up.gif" },
+                    { name: "النزول والطلوع على المتوازي بثني المرفقين بشكل بسيط مع المحافظه على ثبات الجسم 3-4 مجموعات", img: "images/chair-bar-dips.gif" },
+                    { name: "عقلة استرالية قبضة ضيقة معكوسة والارجل مفرودة 3-4 مجموعات", img: "images/side_twist.jpg" }
                 ],
                 core: [
-                    { name: "تمرين اللوح الخشبي - 3 مجموعات × 1 دقيقة", img: "images/plank.jpg" },
-                    { name: "تمرين رفع الجذع - 3 مجموعات × 15", img: "images/situp.jpg" }
+                    { name: "على المتوازي رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/captains-chair-knee-raise.gif" },
+                    { name: "على العقلة رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/hanging-leg-raise-movement.gif" }
                 ],
             },
             25: {
                 warmup: [
-                    { name: "تمارين القفز الخفيف - 2 دقيقة", img: "images/light_jump.jpg" },
-                    { name: "تمارين التمدد للأمام - 1 دقيقة", img: "images/front_stretch.jpg" }
+                    { name: "القفز مع فتح القدمين والذراعين - 30 ثانية", img: "images/jumping_ jacks.gif" },
+                    { name: "احماء واطالات الاكتاف والذراعين والرسغ للجانبين", img: "images/stretching.gif" }
                 ],
                 main: [
-                    { name: "تمرين الضغط المائل - 3 مجموعات × 12", img: "images/incline_pushup.jpg" },
-                    { name: "تمرين السكوات بالقفز - 3 مجموعات × 15", img: "images/jump_squat.jpg" },
-                    { name: "تمرين السحب الجانبي - 3 مجموعات × 10", img: "images/side_pull.jpg" },
-                    { name: "تمرين الطعنات الجانبية - 3 مجموعات × 15", img: "images/side_lunges.jpg" }
+                    { name: "القفز لوضعية العقلة ضيق ثم النزول للاسف بتحكم مع فرد الذراعين قبل ملامسة الارض 3-4 مجموعات", img: "images/negative_close_pull_up.gif" },
+                    { name: "الضغط على سطح مرتفع مع الحفاظ على استقامة الركبتين 3-4 مجموعات", img: "images/incline-push-up-bench.gif" },
+                    { name: "عقلة استرالية قبضة ضيقة والارجل مفرودة 3-4 مجموعات", img: "images/Australian_close_pull_up.gif" },
+                    { name: "السير على اليدين من فوق مرتفع للامام ثم للخلف مع المحافضة على استقامة اليدين والقدمين 3-4 مجموعات", img: "images/decline_inchworm.gif" }
                 ],
                 core: [
-                    { name: "تمرين رفع الأرجل مع الدوران - 3 مجموعات × 12", img: "images/leg_raise_twist.jpg" },
-                    { name: "تمرين الكرنش - 3 مجموعات × 20", img: "images/crunch.jpg" }
+                    { name: "على المتوازي رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/captains-chair-knee-raise.gif" },
+                    { name: "على العقلة رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/hanging-leg-raise-movement.gif" },
+                    { name: "تمرين البلانك ثبات 30 ثانية 3 مجموعات", img: "images/plank.gif" },
+                    { name: "تمرين هولو بودي ثبات 30 ثانية 3 مجموعات", img: "images/hollow_body_1.png" }
                 ],
             },
             26: {
                 warmup: [
-                    { name: "تمارين الركض السريع - 2 دقيقة", img: "images/sprint.jpg" },
-                    { name: "تمارين التمدد للأرجل - 1 دقيقة", img: "images/leg_stretch.jpg" }
+                    { name: "القفز مع فتح القدمين والذراعين - 30 ثانية", img: "images/jumping_ jacks.gif" },
+                    { name: "احماء واطالات الاكتاف والذراعين والرسغ للجانبين", img: "images/stretching.gif" }
                 ],
                 main: [
-                    { name: "تمرين الضغط العادي - 3 مجموعات × 20", img: "images/pushup.jpg" },
-                    { name: "تمرين البلانك مع رفع الذراع - 3 مجموعات × 30 ثانية", img: "images/plank_arm_raise.jpg" },
-                    { name: "تمرين السكوات بوزن الجسم - 3 مجموعات × 15", img: "images/bodyweight_squat.jpg" },
-                    { name: "تمرين القفز العالي - 3 مجموعات × 10", img: "images/high_jump.jpg" }
+                    { name: "ضغط ضيق على سطح مرتفع مع الحفاظ على استقامة الركبتين 3-4 مجموعات", img: "images/incline_close_push_up.gif" },
+                    { name: "القفز لوضعية العقلة بقبضة معكوسة ضيقة ثم النزول للاسف بتحكم مع فرد الذراعين قبل ملامسة الارض 3-4 مجموعات", img: "images/negative_close_chin_up.gif" },
+                    { name: "النزول والطلوع على المتوازي بثني المرفقين بشكل بسيط مع المحافظه على ثبات الجسم 3-4 مجموعات", img: "images/Dips.gif" },
+                    { name: "عقلة استرالية قبضة ضيقة معكوسة والارجل مفرودة 3-4 مجموعات", img: "images/Australian_close_grip_pull_up.gif" }
                 ],
                 core: [
-                    { name: "تمرين اللوح الخشبي الجانبي - 3 مجموعات × 30 ثانية", img: "images/side_plank.jpg" },
-                    { name: "تمرين الدراجة السريع - 3 مجموعات × 20", img: "images/fast_bicycle.jpg" }
+                    { name: "على المتوازي رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/captains-chair-knee-raise.gif" },
+                    { name: "على العقلة رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/hanging-leg-raise-movement.gif" }
                 ],
             },
             29: {
                 warmup: [
-                    { name: "تمارين القفز الخفيف - 2 دقيقة", img: "images/light_jump.jpg" },
-                    { name: "تمارين التمدد للأمام - 1 دقيقة", img: "images/front_stretch.jpg" }
+                    { name: "القفز مع فتح القدمين والذراعين - 30 ثانية", img: "images/jumping_ jacks.gif" },
+                    { name: "احماء واطالات الاكتاف والذراعين والرسغ للجانبين", img: "images/stretching.gif" }
                 ],
                 main: [
-                    { name: "تمرين الضغط المائل - 3 مجموعات × 12", img: "images/incline_pushup.jpg" },
-                    { name: "تمرين السكوات بالقفز - 3 مجموعات × 15", img: "images/jump_squat.jpg" },
-                    { name: "تمرين السحب الجانبي - 3 مجموعات × 10", img: "images/side_pull.jpg" },
-                    { name: "تمرين الطعنات الجانبية - 3 مجموعات × 15", img: "images/side_lunges.jpg" }
+                    { name: "تمرين الضغط العادي 3-4 مجموعات", img: "images/push-ups.gif" },
+                    { name: "القفز لوضعية العقلة ثم النزول للاسف بتحكم مع فرد الذراعين قبل ملامسة الارض 3-4 مجموعات", img: "images/negative_pull_up.gif" },
+                    { name: "ضغط ترايسبس بستخدام مرتفع والارجل مفرودة 3-4 مجموعات", img: "images/CHAIR-DIPS.gif" },
+                    { name: "عقلة استرالية والارجل مفرودة 3-4 مجموعات", img: "images/Australian_pull_up.gif" }
                 ],
                 core: [
-                    { name: "تمرين رفع الأرجل مع الدوران - 3 مجموعات × 12", img: "images/leg_raise_twist.jpg" },
-                    { name: "تمرين الكرنش - 3 مجموعات × 20", img: "images/crunch.jpg" }
+                    { name: "على المتوازي رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/captains-chair-knee-raise.gif" },
+                    { name: "على العقلة رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/hanging-leg-raise-movement.gif" },
+                    { name: "تمرين البلانك ثبات 30 ثانية 3 مجموعات", img: "images/plank.gif" },
+                    { name: "تمرين هولو بودي ثبات 30 ثانية 3 مجموعات", img: "images/hollow_body_1.png" }
                 ],
             },
             30: {
                 warmup: [
-                    { name: "تمارين الركض السريع - 2 دقيقة", img: "images/sprint.jpg" },
-                    { name: "تمارين التمدد للأرجل - 1 دقيقة", img: "images/leg_stretch.jpg" }
+                    { name: "القفز مع فتح القدمين والذراعين - 30 ثانية", img: "images/jumping_ jacks.gif" },
+                    { name: "احماء واطالات الاكتاف والذراعين والرسغ للجانبين", img: "images/stretching.gif" }
                 ],
                 main: [
-                    { name: "تمرين الضغط العادي - 3 مجموعات × 20", img: "images/pushup.jpg" },
-                    { name: "تمرين البلانك مع رفع الذراع - 3 مجموعات × 30 ثانية", img: "images/plank_arm_raise.jpg" },
-                    { name: "تمرين السكوات بوزن الجسم - 3 مجموعات × 15", img: "images/bodyweight_squat.jpg" },
-                    { name: "تمرين القفز العالي - 3 مجموعات × 10", img: "images/high_jump.jpg" }
+                    { name: "القفز لوضعية العقلة بقبضة معكوس ثم النزول بتحكم مع فرد الذراعين قبل ملامسة الارض 3-4 مجموعات", img: "images/negative_chin_up.gif" },
+                    { name: "ضغط والرجلين على سطح مرتفع  3-4 مجموعات", img: "images/decline_push_up.gif" },
+                    { name: "عقلة استرالية قبضة معكوسة والارجل مفرودة 3-4 مجموعات", img: "images/Australian_chin_up.gif" },
+                    { name: "ضغط ترايسبس بستخدام مرتفع والارجل مفرودة 3-4 مجموعات", img: "images/CHAIR-DIPS.gif" }
                 ],
                 core: [
-                    { name: "تمرين اللوح الخشبي الجانبي - 3 مجموعات × 30 ثانية", img: "images/side_plank.jpg" },
-                    { name: "تمرين الدراجة السريع - 3 مجموعات × 20", img: "images/fast_bicycle.jpg" }
+                    { name: "على المتوازي رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/captains-chair-knee-raise.gif" },
+                    { name: "على العقلة رفع الركبتين 5 - 3 عدات ثم ثبات الركبتين بزاوية 90 درجة قدر المستطاع", img: "images/hanging-leg-raise-movement.gif" }
                 ],
             }
         };
