@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bodyweight Fitness Pro</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --background: #f8f9fa;
+            --danger: #e74c3c;
+            --rest-day: #9b59b6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+            background: var(--background);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .day-card {
+            background: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            user-select: none;
+        }
+
+        .day-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .day-card.completed {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .day-card.rest-day {
+            background: var(--rest-day);
+            color: white;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        .exercise-img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .timer {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 20px 0;
+            color: var(--secondary);
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .timer.pulsing {
+            animation: pulse 1s infinite;
+        }
+
+        button {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            transition: opacity 0.2s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .nav-button {
+            background: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        .reset-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 15px;
+        }
+
+        .reset-button {
+            background: var(--danger);
+            padding: 8px 16px;
+            font-size: 0.9em;
+        }
+
+        /* Preview Modal Styles */
+        .preview-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .preview-exercises {
+            margin: 15px 0;
+        }
+
+        .exercise-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .exercise-item.rest-day {
+            background: var(--rest-day);
+            color: white;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        .preview-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        /* Preview Image Styles */
+        .preview-exercise-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .exercise-preview-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .exercise-preview-text {
+            flex-grow: 1;
+        }
+
+        .exercise-preview-text h4 {
+            margin: 0 0 5px 0;
+        }
+
+        .exercise-preview-text p {
+            margin: 0;
+            font-size: 1em;
+            color: #666;
+        }
+
+        .exercise-item.rest-day .exercise-preview-text p {
+            color: rgba(255,255,255,0.9);
+        }
+    </style>
+</head>
+<body>
+<a href="home.html" class="nav-button">← Back to Home</a>
+    <div class="container">
+        <div id="mainMenu" class="screen active">
+            <h1>30-Day Bodyweight Challenge</h1>
+            <div class="calendar" id="calendar"></div>
+            <div class="reset-container">
+                <button class="reset-button" onclick="resetAllProgress()">Reset All Progress</button>
+            </div>
+        </div>
+
+        <div id="workoutScreen" class="screen">
+            <button class="nav-button" onclick="showScreen('mainMenu')">← Back to Menu</button>
+            <h2 id="exerciseTitle"></h2>
+            <img class="exercise-img" id="exerciseImage">
+            <div class="timer" id="timer"></div>
+            <div id="exerciseInfo"></div>
+            <div class="button-group">
+                <button id="doneButton">Exercise Done</button>
+                <button id="restButton" class="hidden">Skip Rest</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preview Modal -->
+    <div id="previewModal" class="preview-modal hidden">
+        <h3>Day <span id="previewDayNumber"></span> Preview</h3>
+        <div class="preview-exercises" id="previewExercises"></div>
+        <div class="preview-actions">
+            <button onclick="hidePreview()">Close</button>
+            <button class="start-workout-button" onclick="startWorkout()">Start Workout</button>
+        </div>
+    </div>
+    <div id="modalOverlay" class="modal-overlay hidden"></div>
+
+    <script>
+        // ===== COMPLETE 30-DAY WORKOUT PLAN =====
+        const workoutPlan = {
+            1: [
+                { name: "Lunges", description: "3 sets of 12/leg\nKeep knees at 90°", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bodyweight-Lunge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "التعلق على البار", description: "3 sets of 12/leg\التعلق على البار لاقصى وقت ممكن<br> 3-4 مجموعات", image: "image/hanging.png" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Lunges", description: "3 sets of 12/leg\nKeep knees at 90°", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bodyweight-Lunge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Lunges", description: "3 sets of 12/leg\nKeep knees at 90°", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bodyweight-Lunge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Mountain Climbers", description: "3 sets of 30 seconds\nFast pace", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Mountain-Climber.gif" }
+            ],
+            2: [
+                { name: "Lunges", description: "3 sets of 12/leg\nKeep knees at 90°", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bodyweight-Lunge.gif" },
+                { name: "عقلة استرالية", description: "مجموعات 3-4 \عقلة استرالية مع المحافظ على ثني الركبتين 90 درجة ", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Lunges", description: "3 - 4 sets<br> \ التعلق على البار بقبضة معكوسة لاقصى وقت ممكن", image: "image/chin-ups-hanging.jpg" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Mountain Climbers", description: "3 sets of 30 seconds\nFast pace", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Mountain-Climber.gif" }
+            ],
+            3: [
+                { name: "Active Recovery", description: "Yoga Flow\n30-45 minutes", image: "https://example.com/yoga.gif" }
+            ],
+            4: [
+                { name: "Chair Dips", description: "3 sets of 15 reps\nControl descent", image: "https://example.com/dips.gif" },
+                { name: "Squat Jumps", description: "4 sets of 10 reps\nExplosive movement", image: "https://example.com/squat-jump.gif" },
+                { name: "Superman", description: "3 sets of 30 seconds\nFull extension", image: "https://example.com/superman.gif" }
+            ],
+            5: [
+                { name: "Pike Push-Ups", description: "4 sets of 8 reps\nFocus on shoulders", image: "https://example.com/pike-pushup.gif" },
+                { name: "Single-Leg Deadlifts", description: "3 sets of 10/leg\nBalance focus", image: "https://example.com/deadlift.gif" },
+                { name: "Bird Dog", description: "3 sets of 12/side\nCore stability", image: "https://example.com/bird-dog.gif" }
+            ],
+            6: [
+                { name: "Active Recovery", description: "Yoga Flow\n30-45 minutes", image: "https://example.com/yoga.gif" }
+            ],
+            7: [
+                { name: "Active Recovery", description: "Yoga Flow\n30-45 minutes", image: "https://example.com/yoga.gif" }
+            ],
+            8: [
+                { name: "Lunges", description: "3 sets of 12/leg\nKeep knees at 90°", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bodyweight-Lunge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Lunges", description: "3 sets of 12/leg\nKeep knees at 90°", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bodyweight-Lunge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Mountain Climbers", description: "3 sets of 30 seconds\nFast pace", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Mountain-Climber.gif" }
+            ],
+            9: [
+                { name: "Lunges", description: "3 sets of 12/leg\nKeep knees at 90°", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bodyweight-Lunge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Lunges", description: "3 sets of 12/leg\nKeep knees at 90°", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bodyweight-Lunge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Mountain Climbers", description: "3 sets of 30 seconds\nFast pace", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Mountain-Climber.gif" }
+            ],
+           10: [
+                { name: "Active Recovery", description: "Yoga Flow\n30-45 minutes", image: "https://example.com/yoga.gif" }
+            ],
+           11: [
+                { name: "Chair Dips", description: "3 sets of 15 reps\nControl descent", image: "https://example.com/dips.gif" },
+                { name: "Squat Jumps", description: "4 sets of 10 reps\nExplosive movement", image: "https://example.com/squat-jump.gif" },
+                { name: "Superman", description: "3 sets of 30 seconds\nFull extension", image: "https://example.com/superman.gif" }
+            ],
+            12: [
+                { name: "Pike Push-Ups", description: "4 sets of 8 reps\nFocus on shoulders", image: "https://example.com/pike-pushup.gif" },
+                { name: "Single-Leg Deadlifts", description: "3 sets of 10/leg\nBalance focus", image: "https://example.com/deadlift.gif" },
+                { name: "Bird Dog", description: "3 sets of 12/side\nCore stability", image: "https://example.com/bird-dog.gif" }
+            ],
+           13: [
+                { name: "Active Recovery", description: "Yoga Flow\n30-45 minutes", image: "https://example.com/yoga.gif" }
+            ],
+           14: [
+                { name: "Active Recovery", description: "Yoga Flow\n30-45 minutes", image: "https://example.com/yoga.gif" }
+            ],
+           15: [
+                { name: "Lunges", description: "3 sets of 12/leg\nKeep knees at 90°", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bodyweight-Lunge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Lunges", description: "3 sets of 12/leg\nKeep knees at 90°", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bodyweight-Lunge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Mountain Climbers", description: "3 sets of 30 seconds\nFast pace", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Mountain-Climber.gif" }
+            ],
+           16: [
+                { name: "Lunges", description: "3 sets of 12/leg\nKeep knees at 90°", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bodyweight-Lunge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Lunges", description: "3 sets of 12/leg\nKeep knees at 90°", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bodyweight-Lunge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Mountain Climbers", description: "3 sets of 30 seconds\nFast pace", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Mountain-Climber.gif" }
+            ],
+           17: [
+                { name: "Active Recovery", description: "Yoga Flow\n30-45 minutes", image: "https://example.com/yoga.gif" }
+            ],
+           18: [
+                { name: "Chair Dips", description: "3 sets of 15 reps\nControl descent", image: "https://example.com/dips.gif" },
+                { name: "Squat Jumps", description: "4 sets of 10 reps\nExplosive movement", image: "https://example.com/squat-jump.gif" },
+                { name: "Superman", description: "3 sets of 30 seconds\nFull extension", image: "https://example.com/superman.gif" }
+            ],
+            19: [
+                { name: "Pike Push-Ups", description: "4 sets of 8 reps\nFocus on shoulders", image: "https://example.com/pike-pushup.gif" },
+                { name: "Single-Leg Deadlifts", description: "3 sets of 10/leg\nBalance focus", image: "https://example.com/deadlift.gif" },
+                { name: "Bird Dog", description: "3 sets of 12/side\nCore stability", image: "https://example.com/bird-dog.gif" }
+            ],
+           20: [
+                { name: "Active Recovery", description: "Yoga Flow\n30-45 minutes", image: "https://example.com/yoga.gif" }
+            ],
+           21: [
+                { name: "Active Recovery", description: "Yoga Flow\n30-45 minutes", image: "https://example.com/yoga.gif" }
+            ],
+           22: [
+                { name: "Lunges", description: "3 sets of 12/leg\nKeep knees at 90°", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bodyweight-Lunge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Lunges", description: "3 sets of 12/leg\nKeep knees at 90°", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bodyweight-Lunge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Mountain Climbers", description: "3 sets of 30 seconds\nFast pace", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Mountain-Climber.gif" }
+            ],
+           23: [
+                { name: "Lunges", description: "3 sets of 12/leg\nKeep knees at 90°", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bodyweight-Lunge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Lunges", description: "3 sets of 12/leg\nKeep knees at 90°", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bodyweight-Lunge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Mountain Climbers", description: "3 sets of 30 seconds\nFast pace", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Mountain-Climber.gif" }
+            ],
+           24: [
+                { name: "Active Recovery", description: "Yoga Flow\n30-45 minutes", image: "https://example.com/yoga.gif" }
+            ],
+           25: [
+                { name: "Chair Dips", description: "3 sets of 15 reps\nControl descent", image: "https://example.com/dips.gif" },
+                { name: "Squat Jumps", description: "4 sets of 10 reps\nExplosive movement", image: "https://example.com/squat-jump.gif" },
+                { name: "Superman", description: "3 sets of 30 seconds\nFull extension", image: "https://example.com/superman.gif" }
+            ],
+            26: [
+                { name: "Pike Push-Ups", description: "4 sets of 8 reps\nFocus on shoulders", image: "https://example.com/pike-pushup.gif" },
+                { name: "Single-Leg Deadlifts", description: "3 sets of 10/leg\nBalance focus", image: "https://example.com/deadlift.gif" },
+                { name: "Bird Dog", description: "3 sets of 12/side\nCore stability", image: "https://example.com/bird-dog.gif" }
+            ],
+           27: [
+                { name: "Active Recovery", description: "Yoga Flow\n30-45 minutes", image: "https://example.com/yoga.gif" }
+            ],
+           28: [
+                { name: "Active Recovery", description: "Yoga Flow\n30-45 minutes", image: "https://example.com/yoga.gif" }
+            ],
+           29: [
+                { name: "Lunges", description: "3 sets of 12/leg\nKeep knees at 90°", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bodyweight-Lunge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Lunges", description: "3 sets of 12/leg\nKeep knees at 90°", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bodyweight-Lunge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Mountain Climbers", description: "3 sets of 30 seconds\nFast pace", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Mountain-Climber.gif" }
+            ],
+           30: [
+                { name: "Lunges", description: "3 sets of 12/leg\nKeep knees at 90°", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bodyweight-Lunge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Lunges", description: "3 sets of 12/leg\nKeep knees at 90°", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Bodyweight-Lunge.gif" },
+                { name: "Glute Bridges", description: "3 sets of 20 reps\nSqueeze at the top", image: "https://fitnessprogramer.com/wp-content/uploads/2022/02/Glute-Bridge.gif" },
+                { name: "Mountain Climbers", description: "3 sets of 30 seconds\nFast pace", image: "https://fitnessprogramer.com/wp-content/uploads/2021/02/Mountain-Climber.gif" }
+            ]
+        };
+
+        // ===== APP STATE =====
+        let currentState = {
+            day: 1,
+            exerciseIndex: 0,
+            timer: null,
+            previewDay: null,
+            completedDays: JSON.parse(localStorage.getItem('completedDays') || '[]')
+        };
+
+        // ===== CALENDAR FUNCTIONS =====
+        function initializeCalendar() {
+            const calendar = document.getElementById('calendar');
+            calendar.innerHTML = '';
+            
+            for (let i = 1; i <= 30; i++) {
+                const day = document.createElement('div');
+                day.className = `day-card ${currentState.completedDays.includes(i) ? 'completed' : ''}`;
+                
+                if (workoutPlan[i]?.[0]?.name === "Active Recovery") {
+                    day.classList.add('rest-day');
+                }
+
+                day.textContent = i;
+                day.oncontextmenu = (e) => {
+                    e.preventDefault();
+                    if (currentState.completedDays.includes(i)) {
+                        removeCompletedDay(i);
+                    }
+                    return false;
+                };
+                day.onclick = () => handleDayClick(i);
+                calendar.appendChild(day);
+            }
+        }
+
+        function handleDayClick(day) {
+            if (currentState.completedDays.includes(day)) {
+                if (confirm('Remove this day from completed?')) {
+                    removeCompletedDay(day);
+                }
+                return;
+            }
+            
+            if (!workoutPlan[day]) {
+                alert('Workout plan for this day is coming soon!');
+                return;
+            }
+            
+            showPreview(day);
+        }
+
+        // ===== PREVIEW FUNCTIONS =====
+        function showPreview(day) {
+            currentState.previewDay = day;
+            const exercises = workoutPlan[day];
+            
+            document.getElementById('previewDayNumber').textContent = day;
+            const exercisesContainer = document.getElementById('previewExercises');
+            exercisesContainer.innerHTML = '';
+            
+            if (exercises[0].name === "Active Recovery") {
+                exercisesContainer.innerHTML = `
+                    <div class="exercise-item rest-day">
+                        <div class="exercise-preview-content">
+                            <img src="${exercises[0].image}" class="preview-exercise-image" alt="Recovery">
+                            <div class="exercise-preview-text">
+                                <h4>${exercises[0].name}</h4>
+                                <p>${exercises[0].description}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                exercises.forEach(exercise => {
+                    exercisesContainer.innerHTML += `
+                        <div class="exercise-item">
+                            <div class="exercise-preview-content">
+                                <img src="${exercise.image}" class="preview-exercise-image" alt="${exercise.name}">
+                                <div class="exercise-preview-text">
+                                    <h4>${exercise.name}</h4>
+                                    <p>${exercise.description.replace(/\n/g, '<br>')}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            
+            document.getElementById('previewModal').classList.remove('hidden');
+            document.getElementById('modalOverlay').classList.remove('hidden');
+        }
+
+        function hidePreview() {
+            document.getElementById('previewModal').classList.add('hidden');
+            document.getElementById('modalOverlay').classList.add('hidden');
+        }
+
+        function startWorkout() {
+            hidePreview();
+            const day = currentState.previewDay;
+            
+            if (workoutPlan[day][0].name === "Active Recovery") {
+                if (confirm("Mark this recovery day as completed?")) {
+                    currentState.day = day;
+                    completeDay();
+                }
+                return;
+            }
+            
+            currentState.day = day;
+            currentState.exerciseIndex = 0;
+            showScreen('workoutScreen');
+            loadExercise();
+        }
+
+        // ===== WORKOUT FUNCTIONS =====
+        function loadExercise() {
+            const workout = workoutPlan[currentState.day];
+            if (!workout || currentState.exerciseIndex >= workout.length) {
+                completeDay();
+                return;
+            }
+
+            const exercise = workout[currentState.exerciseIndex];
+            document.getElementById('exerciseTitle').textContent = exercise.name;
+            document.getElementById('exerciseInfo').innerHTML = exercise.description.replace(/\n/g, '<br>');
+            document.getElementById('exerciseImage').src = exercise.image;
+            document.getElementById('doneButton').classList.remove('hidden');
+            document.getElementById('restButton').classList.add('hidden');
+            document.getElementById('timer').textContent = '';
+        }
+
+        function startRestTimer(seconds) {
+            let timeLeft = seconds;
+            const timerElement = document.getElementById('timer');
+            timerElement.classList.add('pulsing');
+            
+            currentState.timer = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = `Next exercise in: ${timeLeft}s`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(currentState.timer);
+                    timerElement.classList.remove('pulsing');
+                    currentState.exerciseIndex++;
+                    loadExercise();
+                }
+            }, 1000);
+        }
+
+        function completeDay() {
+            clearInterval(currentState.timer);
+            if (!currentState.completedDays.includes(currentState.day)) {
+                currentState.completedDays.push(currentState.day);
+                localStorage.setItem('completedDays', JSON.stringify(currentState.completedDays));
+                initializeCalendar();
+            }
+            showScreen('mainMenu');
+        }
+
+        // ===== PROGRESS MANAGEMENT =====
+        function removeCompletedDay(day) {
+            currentState.completedDays = currentState.completedDays.filter(d => d !== day);
+            localStorage.setItem('completedDays', JSON.stringify(currentState.completedDays));
+            initializeCalendar();
+        }
+
+        function resetAllProgress() {
+            if (confirm('Are you sure you want to reset all progress?')) {
+                localStorage.removeItem('completedDays');
+                currentState.completedDays = [];
+                initializeCalendar();
+            }
+        }
+
+        // ===== UTILITY FUNCTIONS =====
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // ===== EVENT LISTENERS =====
+        document.addEventListener('DOMContentLoaded', initializeCalendar);
+        document.getElementById('doneButton').addEventListener('click', () => {
+            const workout = workoutPlan[currentState.day];
+            if (currentState.exerciseIndex < workout.length - 1) {
+                startRestTimer(30);
+                document.getElementById('doneButton').classList.add('hidden');
+                document.getElementById('restButton').classList.remove('hidden');
+            } else {
+                completeDay();
+            }
+        });
+        document.getElementById('restButton').addEventListener('click', () => {
+            clearInterval(currentState.timer);
+            document.getElementById('timer').classList.remove('pulsing');
+            currentState.exerciseIndex++;
+            loadExercise();
+        });
+    </script>
+</body>
+</html>
